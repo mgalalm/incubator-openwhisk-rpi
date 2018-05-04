@@ -130,7 +130,7 @@ class LeanBalancer(config: WhiskConfig, controllerInstance: InstanceId)(
         transid.finished(
           this,
           start,
-          s"posted to ${status.topic()}[${status.partition()}][${status.offset()}]",
+          s"posted to $topic",
           logLevel = InfoLevel)
       case Failure(_) => transid.failed(this, start, s"error on posting to topic $topic")
     }

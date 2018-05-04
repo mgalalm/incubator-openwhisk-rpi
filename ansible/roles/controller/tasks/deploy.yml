@@ -223,7 +223,7 @@
       "METRICS_KAMON": "{{ metrics.kamon.enabled }}"
       "METRICS_KAMON_TAGS": "{{ metrics.kamon.tags }}"
       "METRICS_LOG": "{{ metrics.log.enabled }}"
-      "CONFIG_whisk_controller_protocol": "{{ controller.protocol }}"
+      "CONFIG_whisk_controller_protocol": "http"
       "CONFIG_whisk_controller_https_keystorePath": "{{ controller.ssl.keystore.path }}"
       "CONFIG_whisk_controller_https_keystorePassword": "{{ controller.ssl.keystore.password }}"
       "CONFIG_whisk_controller_https_keystoreFlavor": "{{ controller.ssl.storeFlavor }}"
@@ -256,7 +256,7 @@
       "DB_WHISK_ACTIONS": "{{ db.whisk.actions }}"
       "DB_WHISK_ACTIVATIONS": "{{ db.whisk.activations }}"
       "DB_WHISK_AUTHS": "{{ db.whisk.auth }}"
-      "WHISK_API_HOST_PROTO": "{{ whisk_api_host_proto | default('https') }}"
+      "WHISK_API_HOST_PROTO": "{{ whisk_api_host_proto | default('http') }}"
       "WHISK_API_HOST_PORT": "{{ whisk_api_host_port | default('443') }}"
       "WHISK_API_HOST_NAME": "{{ whisk_api_host_name | default(groups['edge'] | first) }}"
       "DOCKER_REGISTRY": "{{ docker_registry }}"
@@ -311,7 +311,7 @@
 
 - name: wait until the Controller in this host is up and running
   uri:
-    url: "{{ controller.protocol }}://{{ ansible_host }}:{{ controller.basePort + (controller_index | int) }}/ping"
+    url: "http://{{ ansible_host }}:{{ controller.basePort + (controller_index | int) }}/ping"
     validate_certs: no
     client_key: "{{ controller.confdir }}/{{ controller_name }}/{{ controller.ssl.key }}"
     client_cert: "{{ controller.confdir }}/{{ controller_name }}/{{ controller.ssl.cert }}"
