@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package whisk.connector.kafka
+package whisk.connector.lean
 
 import scala.concurrent.duration.FiniteDuration
 import whisk.common.Logging
