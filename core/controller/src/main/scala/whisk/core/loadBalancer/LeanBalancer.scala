@@ -223,22 +223,5 @@ object LeanBalancer extends LoadBalancerProvider {
     def requiredProperties =
       Map(servicePort -> 8080.toString(), dockerRegistry -> null, dockerImagePrefix -> null) ++
       ExecManifest.requiredProperties ++
-      kafkaHosts ++
-      wskApiHost ++ Map(dockerImageTag -> "latest") ++
-      Map(invokerName -> "")      
+      wskApiHost ++ Map(dockerImageTag -> "latest")
 }
-
-///**
-// * State kept for each activation until completion.
-// *
-// * @param id id of the activation
-// * @param namespaceId namespace that invoked the action
-// * @param invokerName invoker the action is scheduled to
-// * @param timeoutHandler times out completion of this activation, should be canceled on good paths
-// * @param promise the promise to be completed by the activation
-// */
-//case class ActivationEntry(id: ActivationId,
-//                           namespaceId: UUID,
-//                           invokerName: InstanceId,
-//                           timeoutHandler: Cancellable,
-//                           promise: Promise[Either[ActivationId, WhiskActivation]])
