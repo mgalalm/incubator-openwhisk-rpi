@@ -17,16 +17,19 @@
 
 package whisk.connector.lean
 
+import java.util.concurrent.BlockingQueue
+import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.ConcurrentMap
+import java.util.concurrent.LinkedBlockingQueue
+
 import scala.concurrent.duration.FiniteDuration
+
+import akka.actor.ActorSystem
 import whisk.common.Logging
 import whisk.core.WhiskConfig
 import whisk.core.connector.MessageConsumer
 import whisk.core.connector.MessageProducer
 import whisk.core.connector.MessagingProvider
-import java.util.concurrent.{ConcurrentHashMap, LinkedBlockingQueue, ConcurrentMap, BlockingQueue}
-import whisk.connector.lean.LeanProducer
-import whisk.connector.lean.LeanConsumer
-import akka.actor.ActorSystem
 
 /**
  * A simple implementation of MessagingProvider
