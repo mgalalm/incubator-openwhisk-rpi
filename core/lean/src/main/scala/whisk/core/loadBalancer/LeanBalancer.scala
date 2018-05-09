@@ -77,7 +77,7 @@ class LeanBalancer(config: WhiskConfig, controllerInstance: InstanceId)(
       entry.promise.future
     }
   }
-  
+
   /** 2. Update local state with the to be executed activation */
   private def setupActivation(msg: ActivationMessage,
                               action: ExecutableWhiskActionMetaData,
@@ -209,7 +209,7 @@ class LeanBalancer(config: WhiskConfig, controllerInstance: InstanceId)(
         logging.debug(this, s"forced active ack for '$aid' which has no entry")(tid)
     }
   }
-  
+
   val invoker = new InvokerReactive(config, InstanceId(0), messageProducer)
 }
 
