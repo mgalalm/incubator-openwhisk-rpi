@@ -1,0 +1,278 @@
+#
+# Licensed to the Apache Software Foundation (ASF) under one or more contributor
+# license agreements.  See the NOTICE file distributed with this work for additional
+# information regarding copyright ownership.  The ASF licenses this file to you
+# under the Apache License, Version 2.0 (the # "License"); you may not use this
+# file except in compliance with the License.  You may obtain a copy of the License
+# at:
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software distributed
+# under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+# CONDITIONS OF ANY KIND, either express or implied.  See the License for the
+# specific language governing permissions and limitations under the License.
+#
+---
+# This role will install Controller in group 'controllers' in the environment inventory
+
+- import_tasks: docker_login.yml
+
+- name: get controller index
+  set_fact:
+    controller_index: "{{ groups['controllers'].index(inventory_hostname) }}"
+
+- name: get controller name
+  set_fact:
+    controller_name: "controller-lean"
+
+- name: "pull the {{ docker.image.tag }} image of controller"
+  shell: "docker pull {{ docker_registry }}{{ docker.image.prefix }}/controller:{{ docker.image.tag }}"
+  when: docker_registry != ""
+  retries: "{{ docker.pull.retries }}"
+  delay: "{{ docker.pull.delay }}"
+
+- name: ensure controller log directory is created with permissions
+  file:
+    path: "{{ whisk_logs_dir }}/{{ controller_name }}"
+    state: directory
+    mode: 0777
+  become: "{{ logs.dir.become }}"
+
+- name: ensure controller config directory is created with permissions
+  file:
+    path: "{{ controller.confdir }}/{{ controller_name }}"
+    state: directory
+    mode: 0777
+  become: "{{ controller.dir.become }}"
+
+- name: copy jmxremote password file
+  when: jmx.enabled
+  template:
+    src: "jmxremote.password.j2"
+    dest: "{{ controller.confdir }}/{{ controller_name }}/jmxremote.password"
+    mode: 0777
+
+- name: copy jmxremote access file
+  when: jmx.enabled
+  template:
+    src: "jmxremote.access.j2"
+    dest: "{{ controller.confdir }}/{{ controller_name }}/jmxremote.access"
+    mode: 0777
+
+- name: copy nginx certificate keystore
+  when: controller.protocol == 'https'
+  copy:
+    src: files/{{ controllerKeystoreName }}
+    mode: 0666
+    dest: "{{ controller.confdir }}/{{ controller_name }}"
+  become: "{{ controller.dir.become }}"
+
+- name: copy certificates
+  when: controller.protocol == 'https'
+  copy:
+    src: "{{ openwhisk_home }}/ansible/roles/controller/files/{{ item }}"
+    mode: 0666
+    dest: "{{ controller.confdir }}/{{ controller_name }}"
+  with_items:
+  - "{{ controller.ssl.cert }}"
+  - "{{ controller.ssl.key }}"
+  become: "{{ controller.dir.become }}"
+
+- name: check, that required databases exist
+  include_tasks: "{{ openwhisk_home }}/ansible/tasks/db/checkDb.yml"
+  vars:
+    dbName: "{{ item }}"
+  with_items:
+  - "{{ db.whisk.actions }}"
+  - "{{ db.whisk.auth }}"
+  - "{{ db.whisk.activations }}"
+
+- name: prepare controller ports
+  set_fact:
+    ports_to_expose: ["{{ controller.basePort }}:8080", "{{ controller.akka.cluster.basePort }}:{{ controller.akka.cluster.bindPort }}"]
+
+- name: expose additional ports if jmxremote is enabled
+  when: jmx.enabled
+  set_fact:
+    ports_to_expose: "{{ ports_to_expose }} + [ \"{{ jmx.basePortController }}:{{ jmx.basePortController }}\" ] + [ \"{{ jmx.rmiBasePortController }}:{{ jmx.rmiBasePortController }}\" ]"
+
+- name: add additional jvm params if jmxremote is enabled
+  when: jmx.enabled
+  set_fact:
+    controller_args: "{{ controller.arguments }} {{ jmx.jvmCommonArgs }} -Djava.rmi.server.hostname={{ inventory_hostname }} -Dcom.sun.management.jmxremote.rmi.port={{ jmx.rmiBasePortController }} -Dcom.sun.management.jmxremote.port={{ jmx.basePortController }}"
+
+#####INVOKER#####
+- name: "pull runtime action images with tag {{docker.image.tag}}"
+  shell: "docker pull {{docker_registry}}{{docker.image.prefix}}/{{item}}:{{docker.image.tag}}"
+  with_items: "{{ runtimesManifest.runtimes.values() | sum(start=[]) | selectattr('deprecated', 'equalto',false)  | map(attribute='image.name') | list | unique }}"
+  when: docker_registry != ""
+  retries: "{{ docker.pull.retries }}"
+  delay: "{{ docker.pull.delay }}"
+
+- name: "pull blackboxes action images with tag {{docker.image.tag}}"
+  shell: "docker pull {{docker_registry}}{{docker.image.prefix}}/{{item.name}}:{{docker.image.tag}}"
+  with_items:
+    - "{{ runtimesManifest.blackboxes }}"
+  when: docker_registry != ""
+  retries: "{{ docker.pull.retries }}"
+  delay: "{{ docker.pull.delay }}"
+
+- name: "determine docker root dir on docker-machine"
+  uri:  url="http://{{ ansible_host }}:{{ docker.port }}/info" return_content=yes
+  register: dockerInfo_output
+  when: whisk_version_name == "mac"
+
+- set_fact:
+    dockerInfo: "{{ dockerInfo_output['json'] }}"
+  when: whisk_version_name == "mac"
+
+- name: "determine docker root dir"
+  shell: echo -e "GET http:/v1.24/info HTTP/1.0\r\n" | nc -U /var/run/docker.sock | grep "{"
+  args:
+    executable: /bin/bash
+  register: dockerInfo_output
+  when: whisk_version_name != "mac"
+
+- set_fact:
+    dockerInfo: "{{ dockerInfo_output.stdout|from_json }}"
+  when: whisk_version_name != "mac"
+
+- name: define options when deploying invoker on Ubuntu
+  set_fact:
+    linuxOptions: "/usr/lib/x86_64-linux-gnu/libapparmor.so.1:/usr/lib/x86_64-linux-gnu/libapparmor.so.1"
+  when: ansible_distribution == "Ubuntu"
+
+- name: add additional jvm params if jmxremote is enabled
+  when: jmx.enabled
+  set_fact:
+    invoker_args: "{{ invoker.arguments }} {{ invoker.jmxremote.jvmArgs }}"
+
+- name: populate environment variables for controller
+  set_fact:
+    controller_env:
+      "JAVA_OPTS": "-Xmx{{ controller.heap }} -XX:+CrashOnOutOfMemoryError -XX:+UseGCOverheadLimit -XX:ErrorFile=/logs/java_error.log -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/logs"
+      "CONTROLLER_OPTS": "{{ controller_args | default(controller.arguments) }}"
+      "CONTROLLER_INSTANCES": 1
+      "JMX_REMOTE": "{{ jmx.enabled }}"
+      "COMPONENT_NAME": "{{ controller_name }}"
+      "PORT": 8080
+
+      "WHISK_VERSION_NAME": "{{ whisk_version_name }}"
+      "WHISK_VERSION_DATE": "{{ whisk.version.date }}"
+      "WHISK_VERSION_BUILDNO": "{{ docker.image.tag }}"
+      "CONFIG_whisk_couchdb_protocol": "{{ db_protocol }}"
+      "CONFIG_whisk_couchdb_host": "{{ db_host }}"
+      "CONFIG_whisk_couchdb_port": "{{ db_port }}"
+      "CONFIG_whisk_couchdb_username": "{{ db_username }}"
+      "CONFIG_whisk_couchdb_password": "{{ db_password }}"
+      "CONFIG_whisk_couchdb_provider": "{{ db_provider }}"
+      "CONFIG_whisk_couchdb_databases_WhiskAuth": "{{ db.whisk.auth }}"
+      "CONFIG_whisk_couchdb_databases_WhiskEntity": "{{ db.whisk.actions }}"
+      "CONFIG_whisk_couchdb_databases_WhiskActivation": "{{ db.whisk.activations }}"
+      "CONFIG_whisk_db_actionsDdoc": "{{ db_whisk_actions_ddoc | default() }}"
+      "CONFIG_whisk_db_activationsDdoc": "{{ db_whisk_activations_ddoc | default() }}"
+      "CONFIG_whisk_db_activationsFilterDdoc": "{{ db_whisk_activations_filter_ddoc | default() }}"
+
+      "LIMITS_ACTIONS_INVOKES_PERMINUTE": "{{ limits.invocationsPerMinute }}"
+      "LIMITS_ACTIONS_INVOKES_CONCURRENT": "{{ limits.concurrentInvocations }}"
+      "LIMITS_ACTIONS_INVOKES_CONCURRENTINSYSTEM": "{{ limits.concurrentInvocationsSystem }}"
+      "LIMITS_TRIGGERS_FIRES_PERMINUTE": "{{ limits.firesPerMinute }}"
+      "LIMITS_ACTIONS_SEQUENCE_MAXLENGTH": "{{ limits.sequenceMaxLength }}"
+
+      "CONFIG_whisk_memory_min": "{{ limit_action_memory_min | default() }}"
+      "CONFIG_whisk_memory_max": "{{ limit_action_memory_max | default() }}"
+      "CONFIG_whisk_memory_std": "{{ limit_action_memory_std | default() }}"
+
+      "CONFIG_whisk_timeLimit_min": "{{ limit_action_time_min | default() }}"
+      "CONFIG_whisk_timeLimit_max": "{{ limit_action_time_max | default() }}"
+      "CONFIG_whisk_timeLimit_std": "{{ limit_action_time_std | default() }}"
+
+      "CONFIG_whisk_activation_payload_max": "{{ limit_activation_payload | default() }}"
+
+      "RUNTIMES_MANIFEST": "{{ runtimesManifest | to_json }}"
+      "CONFIG_whisk_runtimes_defaultImagePrefix": "{{ runtimes_default_image_prefix | default() }}"
+      "CONFIG_whisk_runtimes_defaultImageTag": "{{ runtimes_default_image_tag | default() }}"
+      "CONFIG_whisk_runtimes_bypassPullForLocalImages": "{{ runtimes_bypass_pull_for_local_images | default() }}"
+      "CONFIG_whisk_runtimes_localImagePrefix": "{{ runtimes_local_image_prefix | default() }}"
+
+      "METRICS_KAMON": "{{ metrics.kamon.enabled }}"
+      "METRICS_KAMON_TAGS": "{{ metrics.kamon.tags }}"
+      "METRICS_LOG": "{{ metrics.log.enabled }}"
+      "CONFIG_whisk_controller_protocol": "{{ controller.protocol }}"
+      "CONFIG_whisk_controller_https_keystorePath": "{{ controller.ssl.keystore.path }}"
+      "CONFIG_whisk_controller_https_keystorePassword": "{{ controller.ssl.keystore.password }}"
+      "CONFIG_whisk_controller_https_keystoreFlavor": "{{ controller.ssl.storeFlavor }}"
+      "CONFIG_whisk_controller_https_truststorePath": "{{ controller.ssl.truststore.path }}"
+      "CONFIG_whisk_controller_https_truststorePassword": "{{ controller.ssl.truststore.password }}"
+      "CONFIG_whisk_controller_https_truststoreFlavor": "{{ controller.ssl.storeFlavor }}"
+      "CONFIG_whisk_controller_https_clientAuth": "{{ controller.ssl.clientAuth }}"
+      "CONFIG_whisk_loadbalancer_invokerBusyThreshold": "{{ invoker.busyThreshold }}"
+      "CONFIG_whisk_loadbalancer_blackboxFraction": "{{ controller.blackboxFraction }}"
+
+      "CONFIG_akka_actor_provider": "{{ controller.akka.provider }}"
+
+      "CONFIG_kamon_statsd_hostname": "{{ metrics.kamon.host }}"
+      "CONFIG_kamon_statsd_port": "{{ metrics.kamon.port }}"
+
+      "CONFIG_whisk_spi_LogStoreProvider": "{{ userLogs.spi }}"
+      "CONFIG_whisk_spi_MessagingProvider": "whisk.connector.lean.LeanMessagingProvider"
+      "CONFIG_whisk_spi_LoadBalancerProvider": "whisk.core.loadBalancer.LeanBalancer"
+
+      "CONFIG_logback_log_level": "{{ controller.loglevel }}"
+
+      "CONFIG_whisk_transactions_stride": "{{ transactions.stride | default() }}"
+
+      "INVOKER_OPTS": "{{ invoker_args | default(invoker.arguments) }}"
+
+      "WHISK_API_HOST_PROTO": "{{ whisk_api_host_proto | default('http') }}"
+      "WHISK_API_HOST_PORT": "{{ whisk_api_host_port | default('443') }}"
+      "WHISK_API_HOST_NAME": "{{ whisk_api_host_name | default(groups['edge'] | first) }}"
+      "DOCKER_REGISTRY": "{{ docker_registry }}"
+      "DOCKER_IMAGE_PREFIX": "{{ docker.image.prefix }}"
+      "DOCKER_IMAGE_TAG": "{{ docker.image.tag }}"
+      "CONFIG_whisk_containerFactory_containerArgs_network": "{{ invoker_container_network_name | default('bridge') }}"
+      "INVOKER_CONTAINER_POLICY": "{{ invoker_container_policy_name | default()}}"
+      "CONFIG_whisk_containerPool_numCore": "{{ invoker.numcore }}"
+      "CONFIG_whisk_containerPool_coreShare": "{{ invoker.coreshare }}"
+      "CONFIG_whisk_docker_containerFactory_useRunc": "{{ invoker.useRunc }}"
+      "WHISK_LOGS_DIR": "{{ whisk_logs_dir }}"
+
+- name: extend invoker env
+  set_fact:
+    controller_env: "{{ controller_env|default({}) | combine( {'CONFIG_whisk_containerFactory_containerArgs_dnsServers_' ~ item.0: item.1} ) }}"
+  with_indexed_items: "{{ (invoker_container_network_dns_servers | default()).split(' ')}}"
+
+- name: (re)start controller
+  docker_container:
+    userns_mode: "host"
+    pid_mode: "host"
+    privileged: "yes"
+    name: "{{ controller_name }}"
+    image: "{{ docker_registry }}{{ docker.image.prefix }}/controller:{{ docker.image.tag }}"
+    state: started
+    recreate: true
+    restart_policy: "{{ docker.restart.policy }}"
+    hostname: "{{ controller_name }}"
+    env: "{{ controller_env }}"
+    volumes:
+      - "/sys/fs/cgroup:/sys/fs/cgroup"
+      - "/run/runc:/run/runc"
+      - "{{ dockerInfo['DockerRootDir'] }}/containers/:/containers"
+      - "{{ docker_sock | default('/var/run/docker.sock') }}:/var/run/docker.sock"
+      - "{{ linuxOptions | default('') }}"
+      - "{{ whisk_logs_dir }}/{{ controller_name }}:/logs"
+      - "{{ controller.confdir }}/{{ controller_name }}:/conf"
+    ports: "{{ ports_to_expose }}"
+    command: /bin/sh -c "exec /init.sh 0 >> /logs/{{ controller_name }}_logs.log 2>&1"
+
+- name: wait until the Controller in this host is up and running
+  uri:
+    url: "{{ controller.protocol }}://{{ ansible_host }}:{{ controller.basePort + (controller_index | int) }}/ping"
+    validate_certs: no
+    client_key: "{{ controller.confdir }}/{{ controller_name }}/{{ controller.ssl.key }}"
+    client_cert: "{{ controller.confdir }}/{{ controller_name }}/{{ controller.ssl.cert }}"
+  register: result
+  until: result.status == 200
+  retries: 12
+  delay: 5
