@@ -35,9 +35,9 @@ import whisk.core.connector.MessagingProvider
  * A simple implementation of MessagingProvider
  */
 object LeanMessagingProvider extends MessagingProvider {
-  
+
   val queues: ConcurrentMap[String, BlockingQueue[Array[Byte]]] = new ConcurrentHashMap[String, BlockingQueue[Array[Byte]]]
-  
+
 	def getConsumer(config: WhiskConfig, groupId: String, topic: String, maxPeek: Int, maxPollInterval: FiniteDuration)(
 			implicit logging: Logging, actorSystem: ActorSystem): MessageConsumer = {
 
@@ -46,12 +46,12 @@ object LeanMessagingProvider extends MessagingProvider {
         queue = new LinkedBlockingQueue[Array[Byte]](maxPeek)
         queues.put(topic, queue)
       }
-          
+
       new LeanConsumer(queue, maxPeek)
   }
 	def getProducer(config: WhiskConfig)(implicit logging: Logging, actorSystem: ActorSystem): MessageProducer =
 			new LeanProducer(queues)
-	
+
 	def ensureTopic(config: WhiskConfig, topic: String, topicConfig: String)(implicit logging: Logging): Boolean = {
     true
   }

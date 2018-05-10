@@ -2,6 +2,7 @@ include 'common:scala'
 
 include 'core:controller'
 include 'core:invoker'
+include 'core:lean'
 include 'actionRuntimes:nodejs6Action'
 include 'actionRuntimes:nodejs8Action'
 include 'actionRuntimes:actionProxy'

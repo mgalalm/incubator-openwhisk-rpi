@@ -30,7 +30,7 @@ class LeanConsumer(queue: BlockingQueue[Array[Byte]], override val maxPeek: Int)
      */
     override def peek(duration: FiniteDuration, retry: Int): Iterable[(String, Int, Long, Array[Byte])] = {
       val record = queue.poll(duration.toMillis, TimeUnit.MILLISECONDS)
-      
+
       //TODO: currently returns record in the format below, should be refactored of kafka later
       if(record != null){
         Iterable(("", 0, 0, record))

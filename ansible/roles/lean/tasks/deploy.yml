@@ -27,7 +27,7 @@
     controller_name: "controller-lean"
 
 - name: "pull the {{ docker.image.tag }} image of controller"
-  shell: "docker pull {{ docker_registry }}{{ docker.image.prefix }}/controller:{{ docker.image.tag }}"
+  shell: "docker pull {{ docker_registry }}{{ docker.image.prefix }}/lean:{{ docker.image.tag }}"
   when: docker_registry != ""
   retries: "{{ docker.pull.retries }}"
   delay: "{{ docker.pull.delay }}"
@@ -157,7 +157,6 @@
       "JMX_REMOTE": "{{ jmx.enabled }}"
       "COMPONENT_NAME": "{{ controller_name }}"
       "PORT": 8080
-
       "WHISK_VERSION_NAME": "{{ whisk_version_name }}"
       "WHISK_VERSION_DATE": "{{ whisk.version.date }}"
       "WHISK_VERSION_BUILDNO": "{{ docker.image.tag }}"
@@ -249,7 +248,7 @@
     pid_mode: "host"
     privileged: "yes"
     name: "{{ controller_name }}"
-    image: "{{ docker_registry }}{{ docker.image.prefix }}/controller:{{ docker.image.tag }}"
+    image: "{{ docker_registry }}{{ docker.image.prefix }}/lean:{{ docker.image.tag }}"
     state: started
     recreate: true
     restart_policy: "{{ docker.restart.policy }}"
