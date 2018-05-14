@@ -71,7 +71,7 @@
 - name: copy certificates
   when: controller.protocol == 'https'
   copy:
-    src: "{{ openwhisk_home }}/ansible/roles/controller/files/{{ item }}"
+    src: "{{ openwhisk_home }}/ansible/roles/lean/files/{{ item }}"
     mode: 0666
     dest: "{{ controller.confdir }}/{{ controller_name }}"
   with_items:
