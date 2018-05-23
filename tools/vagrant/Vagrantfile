@@ -67,8 +67,9 @@ Vagrant.configure('2') do |config|
       sudo rm -rfv /var/lib/apt/lists/* && sed -i 's/# \(.*multiverse$\)/\1/g' /etc/apt/sources.list
       printf 'APT::Install-Recommends "1";\nAPT::Install-Suggests "0";\n' | \
         sudo tee /etc/apt/apt.conf.d/99no-recommends
-      sudo apt-get update
-      sudo apt-get install git swapspace -y
+      sudo apt-get update -o Acquire::CompressionTypes::Order::=gz
+      sudo apt-get purge git -y
+      sudo apt-get install git swapspace -y --fix-missing
 
       HOME=/home/vagrant
       OPENWHISK_HOME=${HOME}/openwhisk
@@ -158,7 +159,15 @@ Vagrant.configure('2') do |config|
     cd ${ANSIBLE_HOME}
     su vagrant -c 'ansible-playbook -i environments/vagrant wipe.yml'
     su vagrant -c 'ansible-playbook -i environments/vagrant apigateway.yml'
-    su vagrant -c 'ansible-playbook -i environments/vagrant openwhisk.yml -e invoker_use_runc=False'
+
+    if [[ #{ENV['LEAN']} == "true" ]]; then
+      # Deploy Lean Openwhisk (consolidated controller + invoker without kafka, zookeeper etc.)
+      su vagrant -c 'ansible-playbook -i environments/vagrant openwhisk-lean.yml -e invoker_use_runc=False'
+    else
+      # Deploy full Openwhisk stack
+      su vagrant -c 'ansible-playbook -i environments/vagrant openwhisk.yml -e invoker_use_runc=False'
+    fi
+
     su vagrant -c 'ansible-playbook -i environments/vagrant postdeploy.yml'
 
     # Setup OpenWhisk CLI
