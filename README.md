@@ -41,10 +41,14 @@ Download and install [VirtualBox](https://www.virtualbox.org/wiki/Downloads) and
 Follow these step to run your first OpenWhisk Action:
 ```
 # Clone openwhisk
-git clone --depth=1 https://github.com/apache/incubator-openwhisk.git openwhisk
+git clone --depth=1 -b scale_down_2 git@github.ibm.com:elliot/EdgeWhisk.git openwhisk
 
 # Change directory to tools/vagrant
 cd openwhisk/tools/vagrant
+
+## To deploy Lean controller (composed from invoker + controller) without deploying Kafka, zookeeper, invoker...etc.
+### Set environment variable LEAN to true
+export LEAN=true
 
 # Run script to create vm and run hello action
 ./hello

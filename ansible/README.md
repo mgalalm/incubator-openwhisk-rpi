@@ -146,7 +146,16 @@ ansible-playbook -i environments/<environment> couchdb.yml
 ansible-playbook -i environments/<environment> initdb.yml
 ansible-playbook -i environments/<environment> wipe.yml
 ansible-playbook -i environments/<environment> apigateway.yml
+
+## Notice! Run only ONE of those 2 ansible playbooks below, either openwhisk-lean.yaml or openwhisk.yaml
+## To deploy Lean controller (composed from invoker + controller) without deploying Kafka, zookeeper, invoker...etc.
+
+ansible-playbook -i environments/<environment> openwhisk-lean.yml
+
+## Otherwise, to deploy full Openwhisk stack run
 ansible-playbook -i environments/<environment> openwhisk.yml
+
+
 ansible-playbook -i environments/<environment> postdeploy.yml
 ```
 
