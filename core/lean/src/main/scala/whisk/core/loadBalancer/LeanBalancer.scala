@@ -37,7 +37,7 @@ import scala.concurrent.duration._
 import scala.concurrent.{ExecutionContext, Future, Promise}
 import scala.util.{Failure, Success}
 import whisk.core.invoker.InvokerReactive
-
+import whisk.utils.ExecutionContextFactory
 /**
  * A loadbalancer that uses "horizontal" sharding to not collide with fellow loadbalancers.
  *
@@ -72,6 +72,7 @@ class LeanBalancer(config: WhiskConfig, controllerInstance: InstanceId)(
   /** 1. Publish a message to the loadbalancer */
   override def publish(action: ExecutableWhiskActionMetaData, msg: ActivationMessage)(
     implicit transid: TransactionId): Future[Future[Either[ActivationId, WhiskActivation]]] = {
+    logging.info(this, "in LeanBalancer.publish")
     val entry = setupActivation(msg, action, invokerName)
     sendActivationToInvoker(messageProducer, msg, invokerName).map { _ =>
       entry.promise.future
@@ -82,9 +83,11 @@ class LeanBalancer(config: WhiskConfig, controllerInstance: InstanceId)(
   private def setupActivation(msg: ActivationMessage,
                               action: ExecutableWhiskActionMetaData,
                               instance: InstanceId): ActivationEntry = {
-
+    
     totalActivations.increment()
     activationsPerNamespace.getOrElseUpdate(msg.user.uuid, new LongAdder()).increment()
+    
+    logging.info(this, "in LeanBalancer.setupActivation after increments totalActivations: " + totalActivations + "activationsPerNamespace.getOrElseUpdate(msg.user.uuid, new LongAdder()): " + activationsPerNamespace.getOrElseUpdate(msg.user.uuid, new LongAdder()))
 
     val timeout = action.limits.timeout.duration.max(TimeLimit.STD_DURATION) + 1.minute
     // Install a timeout handler for the catastrophic case where an active ack is not received at all
@@ -115,6 +118,7 @@ class LeanBalancer(config: WhiskConfig, controllerInstance: InstanceId)(
                                       msg: ActivationMessage,
                                       invoker: InstanceId): Future[RecordMetadata] = {
     implicit val transid: TransactionId = msg.transid
+    logging.info(this, "in LeanBalancer.sendActivationToInvoker")
 
     val topic = s"invoker${invoker.toInt}"
 
@@ -125,14 +129,18 @@ class LeanBalancer(config: WhiskConfig, controllerInstance: InstanceId)(
       s"posting topic '$topic' with activation id '${msg.activationId}'",
       logLevel = InfoLevel)
 
+    logging.info(this, "before producer.send")
     producer.send(topic, msg).andThen {
       case Success(status) =>
+        logging.info(this, "producer.send finished with Success")
         transid.finished(
           this,
           start,
           s"posted to $topic",
           logLevel = InfoLevel)
-      case Failure(_) => transid.failed(this, start, s"error on posting to topic $topic")
+      case Failure(_) => 
+        logging.info(this, "producer.send finished with Failure")
+        transid.failed(this, start, s"error on posting to topic $topic")
     }
   }
 
@@ -179,9 +187,12 @@ class LeanBalancer(config: WhiskConfig, controllerInstance: InstanceId)(
 
     // treat left as success (as it is the result of a message exceeding the bus limit)
     val isSuccess = response.fold(_ => true, r => !r.response.isWhiskError)
-
+    logging.info(this, "in processCompletion, aid: " + aid)
+    logging.info(this, "totalActivations: " + totalActivations.toString() + " ctivationsPerNamespace.get(entry.namespaceId): " + activationsPerNamespace.toString())
+    
     activations.remove(aid) match {
       case Some(entry) =>
+        logging.info(this, "in processCompletion Some!!!")
         totalActivations.decrement()
         activationsPerNamespace.get(entry.namespaceId).foreach(_.decrement())
 //        schedulingState.invokerSlots.lift(invoker.toInt).foreach(_.release())
@@ -202,15 +213,28 @@ class LeanBalancer(config: WhiskConfig, controllerInstance: InstanceId)(
         // This happens for health actions, because they don't have an entry in Loadbalancerdata or
         // for activations that already timed out.
 //        invokerPool ! InvocationFinishedMessage(invoker, isSuccess)
-        logging.debug(this, s"received active ack for '$aid' which has no entry")(tid)
+        logging.info(this, "in processCompletion None1")
+        logging.info(this, s"received active ack for '$aid' which has no entry")(tid)
       case None =>
         // the entry has already been removed by an active ack. This part of the code is reached by the timeout.
         // As the active ack is already processed we don't have to do anything here.
-        logging.debug(this, s"forced active ack for '$aid' which has no entry")(tid)
+        logging.info(this, "in processCompletion None2")
+        logging.info(this, s"forced active ack for '$aid' which has no entry")(tid)
     }
   }
 
-  val invoker = new InvokerReactive(config, InstanceId(0), messageProducer)
+  
+  
+  private def getInvoker(){
+    implicit val ec = ExecutionContextFactory.makeCachedThreadPoolExecutionContext()
+    val actorSystema: ActorSystem =
+      ActorSystem(name = "invoker-actor-system", defaultExecutionContext = Some(ec))
+    val invoker = new InvokerReactive(config, InstanceId(0), messageProducer)(actorSystema, implicitly)
+  }
+  
+  getInvoker()
+  
+//  val invoker = new InvokerReactive(config, InstanceId(0), messageProducer)
 }
 
 object LeanBalancer extends LoadBalancerProvider {
