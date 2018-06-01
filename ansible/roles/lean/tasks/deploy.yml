@@ -63,7 +63,7 @@
 - name: copy nginx certificate keystore
   when: controller.protocol == 'https'
   copy:
-    src: files/{{ controllerKeystoreName }}
+    src: "{{ openwhisk_home }}/ansible/roles/controller/files/{{ controllerKeystoreName }}"
     mode: 0666
     dest: "{{ controller.confdir }}/{{ controller_name }}"
   become: "{{ controller.dir.become }}"
@@ -71,7 +71,7 @@
 - name: copy certificates
   when: controller.protocol == 'https'
   copy:
-    src: "{{ openwhisk_home }}/ansible/roles/lean/files/{{ item }}"
+    src: "{{ openwhisk_home }}/ansible/roles/controller/files/{{ item }}"
     mode: 0666
     dest: "{{ controller.confdir }}/{{ controller_name }}"
   with_items:
