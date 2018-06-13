@@ -30,11 +30,6 @@ rm -f docker-${DOCKER_VERSION}.tgz && \
 chmod +x /usr/bin/docker && \
 chmod +x /usr/bin/docker-runc
 
-# Install kubernetes client
-RUN wget --no-verbose https://storage.googleapis.com/kubernetes-release/release/v${KUBERNETES_VERSION}/bin/linux/amd64/kubectl && \
-chmod +x kubectl && \
-mv kubectl /usr/bin/kubectl
-
 # TODO: do we need it in lean?  Install swagger-ui
 RUN curl -sSL -o swagger-ui-v3.6.0.tar.gz --no-verbose https://github.com/swagger-api/swagger-ui/archive/v3.6.0.tar.gz && \
     mkdir swagger-ui && \
