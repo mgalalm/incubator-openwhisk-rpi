@@ -30,6 +30,8 @@ import whisk.core.WhiskConfig
 import whisk.core.connector.MessageConsumer
 import whisk.core.connector.MessageProducer
 import whisk.core.connector.MessagingProvider
+import scala.util.Success
+import scala.util.{Success, Try}
 
 /**
  * A simple implementation of MessagingProvider
@@ -52,7 +54,12 @@ object LeanMessagingProvider extends MessagingProvider {
 	def getProducer(config: WhiskConfig)(implicit logging: Logging, actorSystem: ActorSystem): MessageProducer =
 			new LeanProducer(queues)
 
-	def ensureTopic(config: WhiskConfig, topic: String, topicConfig: String)(implicit logging: Logging): Boolean = {
-    true
+	def ensureTopic(config: WhiskConfig, topic: String, topicConfig: String)(implicit logging: Logging): Try[Unit] = {
+	  if(queues.containsKey(topic)){
+	    Success(logging.info(this, s"topic $topic already existed"))  
+	  }else{
+	    queues.put(topic, new LinkedBlockingQueue[Array[Byte]](Integer.MAX_VALUE))
+	    Success(logging.info(this, s"topic $topic created"))
+	  }    
   }
 }
