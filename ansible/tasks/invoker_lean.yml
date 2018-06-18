@@ -3,8 +3,6 @@
 ---
 # This role installs invokers.
 
-- import_tasks: docker_login.yml
-
 - name: "pull runtime action images with tag {{docker.image.tag}}"
   shell: "docker pull {{docker_registry}}{{docker.image.prefix}}/{{item}}:{{docker.image.tag}}"
   with_items: "{{ runtimesManifest.runtimes.values() | sum(start=[]) | selectattr('deprecated', 'equalto',false)  | map(attribute='image.name') | list | unique }}"
@@ -47,14 +45,13 @@
 - name: expose additional ports if jmxremote is enabled
   when: jmx.enabled
   set_fact:
-	  invoker_ports: "{{ invoker_ports }} + [ \"{{ jmx.basePortInvoker }}:{{ jmx.basePortInvoker }}\" ] + [ \"{{ jmx.rmiBasePortInvoker }}:{{ jmx.rmiBasePortInvoker }}\" ]"
+    invoker_ports: "{{ invoker_ports }} + [ \"{{ jmx.basePortInvoker }}:{{ jmx.basePortInvoker }}\" ] + [ \"{{ jmx.rmiBasePortInvoker }}:{{ jmx.rmiBasePortInvoker }}\" ]"
 
 - name: prepare invoker env
   set_fact:
     invoker_env:      
       "INVOKER_OPTS": "{{ invoker_args | default(invoker.arguments) }}"
       "JMX_REMOTE": "{{ jmx.enabled }}"
-      "COMPONENT_NAME": "invoker{{ groups['invokers'].index(inventory_hostname) }}"
       "PORT": 8080
       "KAFKA_HOSTS": "{{ kafka_connect_string }}"
       "CONFIG_whisk_kafka_replicationFactor": "{{ kafka.replicationFactor | default() }}"
@@ -99,7 +96,6 @@
       "CONFIG_whisk_containerPool_numCore": "{{ invoker.numcore }}"
       "CONFIG_whisk_containerPool_coreShare": "{{ invoker.coreshare }}"
       "CONFIG_whisk_docker_containerFactory_useRunc": "{{ invoker.useRunc }}"
-      "INVOKER_NAME": "{{ groups['invokers'].index(inventory_hostname) }}"
       "WHISK_LOGS_DIR": "{{ whisk_logs_dir }}"
       "METRICS_KAMON": "{{ metrics.kamon.enabled }}"
       "METRICS_KAMON_TAGS": "{{ metrics.kamon.tags }}"
@@ -134,5 +130,5 @@
 
 - name: define options when deploying invoker on Ubuntu
   set_fact:
-	invoker_volumes: "{{ volumes|default('') }},/usr/lib/x86_64-linux-gnu/libapparmor.so.1:/usr/lib/x86_64-linux-gnu/libapparmor.so.1"
+    invoker_volumes: "{{ invoker_volumes|default('') }},/usr/lib/x86_64-linux-gnu/libapparmor.so.1:/usr/lib/x86_64-linux-gnu/libapparmor.so.1"
   when: ansible_distribution == "Ubuntu"
