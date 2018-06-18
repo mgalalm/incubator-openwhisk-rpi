@@ -85,10 +85,8 @@ class LeanBalancer(config: WhiskConfig, controllerInstance: InstanceId)(
                               instance: InstanceId): ActivationEntry = {
     
     totalActivations.increment()
-    activationsPerNamespace.getOrElseUpdate(msg.user.uuid, new LongAdder()).increment()
+    activationsPerNamespace.getOrElseUpdate(msg.user.namespace.uuid, new LongAdder()).increment()
     
-    logging.info(this, "in LeanBalancer.setupActivation after increments totalActivations: " + totalActivations + "activationsPerNamespace.getOrElseUpdate(msg.user.uuid, new LongAdder()): " + activationsPerNamespace.getOrElseUpdate(msg.user.uuid, new LongAdder()))
-
     val timeout = action.limits.timeout.duration.max(TimeLimit.STD_DURATION) + 1.minute
     // Install a timeout handler for the catastrophic case where an active ack is not received at all
     // (because say an invoker is down completely, or the connection to the message bus is disrupted) or when
@@ -103,7 +101,7 @@ class LeanBalancer(config: WhiskConfig, controllerInstance: InstanceId)(
         // please note: timeoutHandler.cancel must be called on all non-timeout paths, e.g. Success
         ActivationEntry(
           msg.activationId,
-          msg.user.uuid,
+          msg.user.namespace.uuid,
           instance,
           timeoutHandler,
           Promise[Either[ActivationId, WhiskActivation]]())
