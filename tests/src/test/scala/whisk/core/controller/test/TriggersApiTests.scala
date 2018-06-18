@@ -108,6 +108,39 @@ class TriggersApiTests extends ControllerTestCommon with WhiskTriggersApi {
     }
   }
 
+  it should "reject list when limit is not an integer" in {
+    implicit val tid = transid()
+    val notAnInteger = "string"
+    val response = Get(s"$collectionPath?limit=$notAnInteger") ~> Route.seal(routes(creds)) ~> check {
+      status should be(BadRequest)
+      responseAs[String] should include {
+        Messages.argumentNotInteger(Collection.TRIGGERS, notAnInteger)
+      }
+    }
+  }
+
+  it should "reject list when skip is negative" in {
+    implicit val tid = transid()
+    val negativeSkip = -1
+    val response = Get(s"$collectionPath?skip=$negativeSkip") ~> Route.seal(routes(creds)) ~> check {
+      status should be(BadRequest)
+      responseAs[String] should include {
+        Messages.listSkipOutOfRange(Collection.TRIGGERS, negativeSkip)
+      }
+    }
+  }
+
+  it should "reject list when skip is not an integer" in {
+    implicit val tid = transid()
+    val notAnInteger = "string"
+    val response = Get(s"$collectionPath?skip=$notAnInteger") ~> Route.seal(routes(creds)) ~> check {
+      status should be(BadRequest)
+      responseAs[String] should include {
+        Messages.argumentNotInteger(Collection.TRIGGERS, notAnInteger)
+      }
+    }
+  }
+
   // ?docs disabled
   ignore should "list triggers by default namespace with full docs" in {
     implicit val tid = transid()
@@ -339,8 +372,9 @@ class TriggersApiTests extends ControllerTestCommon with WhiskTriggersApi {
       val activationDoc = DocId(WhiskEntity.qualifiedName(namespace, activationId))
       whisk.utils.retry({
         println(s"trying to obtain async activation doc: '${activationDoc}'")
-        val activation = get(activationStore, activationDoc, WhiskActivation, garbageCollect = false)
-        del(activationStore, activationDoc, WhiskActivation)
+
+        val activation = getActivation(ActivationId(activationDoc.asString))
+        deleteActivation(ActivationId(activationDoc.asString))
         activation.end should be(Instant.EPOCH)
         activation.response.result should be(Some(content))
       }, 30, Some(1.second))
@@ -362,7 +396,7 @@ class TriggersApiTests extends ControllerTestCommon with WhiskTriggersApi {
       val activationDoc = DocId(WhiskEntity.qualifiedName(namespace, activationId))
       whisk.utils.retry({
         println(s"trying to delete async activation doc: '${activationDoc}'")
-        del(activationStore, activationDoc, WhiskActivation)
+        deleteActivation(ActivationId(activationDoc.asString))
         response.fields("activationId") should not be None
       }, 30, Some(1.second))
     }

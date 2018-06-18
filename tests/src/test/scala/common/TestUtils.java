@@ -54,11 +54,12 @@ import junit.runner.Version;
 public class TestUtils {
     protected static final Logger logger = Logger.getLogger("basic");
 
-    public static final int SUCCESS_EXIT    = 0;
-    public static final int ERROR_EXIT      = 1;
-    public static final int MISUSE_EXIT     = 2;
-    public static final int DONTCARE_EXIT   = -1;       // any value is ok
-    public static final int ANY_ERROR_EXIT  = -2;       // any non-zero value is ok
+    public static final int SUCCESS_EXIT        = 0;
+    public static final int ERROR_EXIT          = 1;
+    public static final int MISUSE_EXIT         = 2;
+    public static final int DONTCARE_EXIT       = -1;       // any value is ok
+    public static final int ANY_ERROR_EXIT      = -2;       // any non-zero value is ok
+    public static final int NETWORK_ERROR_EXIT  = 3;
 
     public static final int ACCEPTED        = 202;      // 202
     public static final int BAD_REQUEST     = 144;      // 400 - 256 = 144
@@ -218,8 +219,8 @@ public class TestUtils {
             this.stderr = stderr;
         }
 
-        public Pair<String, String> logs() {
-            return Pair.make(stdout, stderr);
+        public Pair logs() {
+            return new Pair(stdout, stderr);
         }
 
         public void validateExitCode(int expectedExitCode) {

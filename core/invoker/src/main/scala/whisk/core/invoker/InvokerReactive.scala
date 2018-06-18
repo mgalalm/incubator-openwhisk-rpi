@@ -26,20 +26,20 @@ import akka.stream.ActorMaterializer
 import org.apache.kafka.common.errors.RecordTooLargeException
 import pureconfig._
 import spray.json._
-import whisk.common.{Logging, LoggingMarkers, Scheduler, TransactionId}
+import whisk.common._
 import whisk.core.{ConfigKeys, WhiskConfig}
 import whisk.core.connector._
 import whisk.core.containerpool._
 import whisk.core.containerpool.logging.LogStoreProvider
 import whisk.core.database._
 import whisk.core.entity._
-import whisk.core.entity.size._
 import whisk.http.Messages
 import whisk.spi.SpiLoader
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.duration._
 import scala.util.{Failure, Success}
+import DefaultJsonProtocol._
 
 class InvokerReactive(
   config: WhiskConfig,
@@ -80,7 +80,9 @@ class InvokerReactive(
 
   /** Initialize needed databases */
   private val entityStore = WhiskEntityStore.datastore()
-  private val activationStore = WhiskActivationStore.datastore()
+  private val activationStore =
+    SpiLoader.get[ActivationStoreProvider].instance(actorSystem, materializer, logging)
+
   private val authStore = WhiskAuthStore.datastore()
 
   private val namespaceBlacklist = new NamespaceBlacklist(authStore)
@@ -112,12 +114,12 @@ class InvokerReactive(
   private val ack = (tid: TransactionId,
                      activationResult: WhiskActivation,
                      blockingInvoke: Boolean,
-                     controllerInstance: InstanceId) => {
+                     controllerInstance: InstanceId,
+                     userId: UUID) => {
     implicit val transid: TransactionId = tid
 
     def send(res: Either[ActivationId, WhiskActivation], recovery: Boolean = false) = {
       val msg = CompletionMessage(transid, res, instance)
-
       producer.send(s"completed${controllerInstance.toInt}", msg).andThen {
         case Success(_) =>
           logging.info(
@@ -125,6 +127,30 @@ class InvokerReactive(
             s"posted ${if (recovery) "recovery" else "completion"} of activation ${activationResult.activationId}")
       }
     }
+    // Potentially sends activation metadata to kafka if user events are enabled
+    UserEvents.send(
+      producer, {
+        val activation = Activation(
+          activationResult.namespace + EntityPath.PATHSEP + activationResult.name,
+          activationResult.response.statusCode,
+          activationResult.duration.getOrElse(0),
+          activationResult.annotations.getAs[Long](WhiskActivation.waitTimeAnnotation).getOrElse(0),
+          activationResult.annotations.getAs[Long](WhiskActivation.initTimeAnnotation).getOrElse(0),
+          activationResult.annotations.getAs[String](WhiskActivation.kindAnnotation).getOrElse("unknown_kind"),
+          activationResult.annotations.getAs[Boolean](WhiskActivation.conductorAnnotation).getOrElse(false),
+          activationResult.annotations
+            .getAs[ActionLimits](WhiskActivation.limitsAnnotation)
+            .map(al => al.memory.megabytes)
+            .getOrElse(0),
+          activationResult.annotations.getAs[Boolean](WhiskActivation.causedByAnnotation).getOrElse(false))
+        EventMessage(
+          s"invoker${instance.instance}",
+          activation,
+          activationResult.subject,
+          activationResult.namespace.toString,
+          userId,
+          activation.typeName)
+      })
 
     send(Right(if (blockingInvoke) activationResult else activationResult.withoutLogsOrResult)).recoverWith {
       case t if t.getCause.isInstanceOf[RecordTooLargeException] =>
@@ -135,11 +161,7 @@ class InvokerReactive(
   /** Stores an activation in the database. */
   private val store = (tid: TransactionId, activation: WhiskActivation) => {
     implicit val transid: TransactionId = tid
-    logging.debug(this, "recording the activation result to the data store")
-    WhiskActivation.put(activationStore, activation)(tid, notifier = None).andThen {
-      case Success(id) => logging.debug(this, s"recorded activation")
-      case Failure(t)  => logging.error(this, s"failed to record activation")
-    }
+    activationStore.store(activation)(tid, notifier = None)
   }
 
   /** Creates a ContainerProxy Actor when being called. */
@@ -148,14 +170,17 @@ class InvokerReactive(
       ContainerProxy
         .props(containerFactory.createContainer, ack, store, logsProvider.collectLogs, instance, poolConfig))
 
-  private val prewarmKind = "nodejs:6"
-  private val prewarmExec = ExecManifest.runtimesManifest
-    .resolveDefaultRuntime(prewarmKind)
-    .map(manifest => CodeExecAsString(manifest, "", None))
-    .get
+  val prewarmingConfigs: List[PrewarmingConfig] = {
+    ExecManifest.runtimesManifest.stemcells.flatMap {
+      case (mf, cells) =>
+        cells.map { cell =>
+          PrewarmingConfig(cell.count, new CodeExecAsString(mf, "", None), cell.memory)
+        }
+    }.toList
+  }
 
-  private val pool = actorSystem.actorOf(
-    ContainerPool.props(childFactory, poolConfig, activationFeed, Some(PrewarmingConfig(2, prewarmExec, 256.MB))))
+  private val pool =
+    actorSystem.actorOf(ContainerPool.props(childFactory, poolConfig, activationFeed, prewarmingConfigs))
 
   /** Is called when an ActivationMessage is read from Kafka */
   def processActivationMessage(bytes: Array[Byte]): Future[Unit] = {
@@ -209,7 +234,7 @@ class InvokerReactive(
 
                 val activation = generateFallbackActivation(msg, response)
                 activationFeed ! MessageFeed.Processed
-                ack(msg.transid, activation, msg.blocking, msg.rootControllerIndex)
+                ack(msg.transid, activation, msg.blocking, msg.rootControllerIndex, msg.user.namespace.uuid)
                 store(msg.transid, activation)
                 Future.successful(())
             }
@@ -219,8 +244,8 @@ class InvokerReactive(
           activationFeed ! MessageFeed.Processed
           val activation =
             generateFallbackActivation(msg, ActivationResponse.applicationError(Messages.namespacesBlacklisted))
-          ack(msg.transid, activation, false, msg.rootControllerIndex)
-          logging.warn(this, s"namespace ${msg.user.namespace} was blocked in invoker.")
+          ack(msg.transid, activation, false, msg.rootControllerIndex, msg.user.namespace.uuid)
+          logging.warn(this, s"namespace ${msg.user.namespace.name} was blocked in invoker.")
           Future.successful(())
         }
       }
@@ -243,7 +268,7 @@ class InvokerReactive(
 
     WhiskActivation(
       activationId = msg.activationId,
-      namespace = msg.user.namespace.toPath,
+      namespace = msg.user.namespace.name.toPath,
       subject = msg.user.subject,
       cause = msg.cause,
       name = msg.action.name,

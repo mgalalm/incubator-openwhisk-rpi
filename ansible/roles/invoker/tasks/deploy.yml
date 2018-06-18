@@ -1,18 +1,5 @@
-#
 # Licensed to the Apache Software Foundation (ASF) under one or more contributor
-# license agreements.  See the NOTICE file distributed with this work for additional
-# information regarding copyright ownership.  The ASF licenses this file to you
-# under the Apache License, Version 2.0 (the # "License"); you may not use this
-# file except in compliance with the License.  You may obtain a copy of the License
-# at:
-#
-# http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software distributed
-# under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
-# CONDITIONS OF ANY KIND, either express or implied.  See the License for the
-# specific language governing permissions and limitations under the License.
-#
+# license agreements; and to You under the Apache License, Version 2.0.
 ---
 # This role installs invokers.
 
@@ -89,11 +76,6 @@
   - "{{ db.whisk.actions }}"
   - "{{ db.whisk.activations }}"
 
-- name: define options when deploying invoker on Ubuntu
-  set_fact:
-    linuxOptions: "/usr/lib/x86_64-linux-gnu/libapparmor.so.1:/usr/lib/x86_64-linux-gnu/libapparmor.so.1"
-  when: ansible_distribution == "Ubuntu"
-
 - name: get running invoker information
   uri: url="http://{{ ansible_host }}:{{ docker.port }}/containers/json?filters={{ '{"name":[ "invoker" ],"ancestor":[ "invoker" ]}' | urlencode }}" return_content=yes
   register: invokerInfo_output
@@ -161,7 +143,7 @@
 
 - name: prepare invoker env
   set_fact:
-    env:
+    invoker_env:
       "JAVA_OPTS": "-Xmx{{ invoker.heap }} -XX:+CrashOnOutOfMemoryError -XX:+UseGCOverheadLimit -XX:ErrorFile=/logs/java_error.log"
       "INVOKER_OPTS": "{{ invoker_args | default(invoker.arguments) }}"
       "JMX_REMOTE": "{{ jmx.enabled }}"
@@ -177,6 +159,7 @@
       "CONFIG_whisk_kafka_common_sslTruststorePassword": "{{ kafka.ssl.keystore.password }}"
       "CONFIG_whisk_kafka_common_sslKeystoreLocation": "/conf/{{ kafka.ssl.keystore.name }}"
       "CONFIG_whisk_kafka_common_sslKeystorePassword": "{{ kafka.ssl.keystore.password }}"
+      "CONFIG_whisk_userEvents_enabled": "{{ user_events }}"
       "ZOOKEEPER_HOSTS": "{{ zookeeper_connect_string }}"
       "CONFIG_whisk_couchdb_protocol": "{{ db_protocol }}"
       "CONFIG_whisk_couchdb_host": "{{ db_host }}"
@@ -225,11 +208,29 @@
       "CONFIG_whisk_timeLimit_max": "{{ limit_action_time_max | default() }}"
       "CONFIG_whisk_timeLimit_std": "{{ limit_action_time_std | default() }}"
       "CONFIG_whisk_activation_payload_max": "{{ limit_activation_payload | default() }}"
+      "CONFIG_whisk_transactions_header": "{{ transactions.header }}"
 
-- name: extend invoker env
+- name: extend invoker dns env
   set_fact:
-    env: "{{ env|default({}) | combine( {'CONFIG_whisk_containerFactory_containerArgs_dnsServers_' ~ item.0: item.1} ) }}"
+    invoker_env: "{{ invoker_env | default({}) | combine( {'CONFIG_whisk_containerFactory_containerArgs_dnsServers_' ~ item.0: item.1} ) }}"
   with_indexed_items: "{{ (invoker_container_network_dns_servers | default()).split(' ')}}"
+
+- name: merge extra env variables
+  set_fact:
+    invoker_env: "{{ invoker_env | combine(invoker.extraEnv) }}"
+
+- name: set invoker volumes
+  set_fact:
+    volumes: "/sys/fs/cgroup:/sys/fs/cgroup,/run/runc:/run/runc,\
+      {{ whisk_logs_dir }}/invoker{{ groups['invokers'].index(inventory_hostname) }}:/logs,\
+      {{ invoker.confdir }}/invoker{{ groups['invokers'].index(inventory_hostname) }}:/conf,\
+      {{ dockerInfo['DockerRootDir'] }}/containers/:/containers,\
+      {{ docker_sock | default('/var/run/docker.sock') }}:/var/run/docker.sock"
+
+- name: define options when deploying invoker on Ubuntu
+  set_fact:
+    volumes: "{{ volumes|default('') }},/usr/lib/x86_64-linux-gnu/libapparmor.so.1:/usr/lib/x86_64-linux-gnu/libapparmor.so.1"
+  when: ansible_distribution == "Ubuntu"
 
 - name: start invoker using docker cli
   docker_container:
@@ -242,15 +243,8 @@
     image: "{{ docker_registry }}{{ docker.image.prefix }}/invoker:{{ docker.image.tag }}"
     state: started
     recreate: true
-    env: "{{ env }}"
-    volumes:
-      - "/sys/fs/cgroup:/sys/fs/cgroup"
-      - "/run/runc:/run/runc"
-      - "{{ whisk_logs_dir }}/invoker{{ groups['invokers'].index(inventory_hostname) }}:/logs"
-      - "{{ invoker.confdir }}/invoker{{ groups['invokers'].index(inventory_hostname) }}:/conf"
-      - "{{ dockerInfo['DockerRootDir'] }}/containers/:/containers"
-      - "{{ docker_sock | default('/var/run/docker.sock') }}:/var/run/docker.sock"
-      - "{{ linuxOptions | default('') }}"
+    env: "{{ invoker_env }}"
+    volumes: "{{ volumes }}"
     ports: "{{ ports_to_expose }}"
     command: /bin/sh -c "exec /init.sh {{ groups['invokers'].index(inventory_hostname) }} >> /logs/invoker{{ groups['invokers'].index(inventory_hostname) }}_logs.log 2>&1"
 

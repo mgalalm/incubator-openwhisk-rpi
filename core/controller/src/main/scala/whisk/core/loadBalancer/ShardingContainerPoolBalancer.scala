@@ -84,8 +84,9 @@ class ShardingContainerPoolBalancer(config: WhiskConfig, controllerInstance: Ins
   /**
    * Monitors invoker supervision and the cluster to update the state sequentially
    *
-   * All state updates should go through this actor to guarantee, that `updateState` and `updateCluster` are called
-   * mutually exclusive and not concurrently.
+   * All state updates should go through this actor to guarantee that
+   * [[ShardingContainerPoolBalancerState.updateInvokers]] and [[ShardingContainerPoolBalancerState.updateCluster]]
+   * are called exclusive of each other and not concurrently.
    */
   private val monitor = actorSystem.actorOf(Props(new Actor {
     override def preStart(): Unit = {
@@ -137,7 +138,7 @@ class ShardingContainerPoolBalancer(config: WhiskConfig, controllerInstance: Ins
       if (!action.exec.pull) (schedulingState.managedInvokers, schedulingState.managedStepSizes)
       else (schedulingState.blackboxInvokers, schedulingState.blackboxStepSizes)
     val chosen = if (invokersToUse.nonEmpty) {
-      val hash = ShardingContainerPoolBalancer.generateHash(msg.user.namespace, action.fullyQualifiedName(false))
+      val hash = ShardingContainerPoolBalancer.generateHash(msg.user.namespace.name, action.fullyQualifiedName(false))
       val homeInvoker = hash % invokersToUse.size
       val stepSize = stepSizes(hash % stepSizes.size)
       ShardingContainerPoolBalancer.schedule(invokersToUse, schedulingState.invokerSlots, homeInvoker, stepSize)
@@ -161,7 +162,7 @@ class ShardingContainerPoolBalancer(config: WhiskConfig, controllerInstance: Ins
                               instance: InstanceId): ActivationEntry = {
 
     totalActivations.increment()
-    activationsPerNamespace.getOrElseUpdate(msg.user.uuid, new LongAdder()).increment()
+    activationsPerNamespace.getOrElseUpdate(msg.user.namespace.uuid, new LongAdder()).increment()
 
     val timeout = action.limits.timeout.duration.max(TimeLimit.STD_DURATION) + 1.minute
     // Install a timeout handler for the catastrophic case where an active ack is not received at all
@@ -177,7 +178,7 @@ class ShardingContainerPoolBalancer(config: WhiskConfig, controllerInstance: Ins
         // please note: timeoutHandler.cancel must be called on all non-timeout paths, e.g. Success
         ActivationEntry(
           msg.activationId,
-          msg.user.uuid,
+          msg.user.namespace.uuid,
           instance,
           timeoutHandler,
           Promise[Either[ActivationId, WhiskActivation]]())
@@ -417,7 +418,7 @@ case class ShardingContainerPoolBalancerState(
    * Handling a shrinking invokers list is not necessary, because InvokerPool won't shrink its own list but rather
    * report the invoker as "Offline".
    *
-   * It is important that this method does not run concurrently to itself and/or to `updateCluster`
+   * It is important that this method does not run concurrently to itself and/or to [[updateCluster]]
    */
   def updateInvokers(newInvokers: IndexedSeq[InvokerHealth]): Unit = {
     val oldSize = _invokers.size
@@ -454,7 +455,7 @@ case class ShardingContainerPoolBalancerState(
    * This is okay to not happen atomically, since a dirty read of the values set are not dangerous. At worst the
    * scheduler works on outdated invoker-load data which is acceptable.
    *
-   * It is important that this method does not run concurrently to itself and/or to `updateState`
+   * It is important that this method does not run concurrently to itself and/or to [[updateInvokers]]
    */
   def updateCluster(newSize: Int): Unit = {
     val actualSize = newSize max 1 // if a cluster size < 1 is reported, falls back to a size of 1 (alone)

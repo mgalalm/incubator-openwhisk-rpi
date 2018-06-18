@@ -24,9 +24,10 @@ import common.{StreamLogging, WskActorSystem}
 import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
 import org.scalatest.{BeforeAndAfterAll, BeforeAndAfterEach, FlatSpec, Matchers}
 import spray.json.{JsObject, JsValue}
-import whisk.common.{TransactionCounter, TransactionId}
+import whisk.common.TransactionId
+import whisk.core.database.memory.MemoryAttachmentStore
 import whisk.core.database.test.DbUtils
-import whisk.core.database.{ArtifactStore, StaleParameter}
+import whisk.core.database.{ArtifactStore, AttachmentStore, StaleParameter}
 import whisk.core.entity._
 import whisk.utils.JsHelpers
 
@@ -35,7 +36,6 @@ import scala.util.Random
 trait ArtifactStoreBehaviorBase
     extends FlatSpec
     with ScalaFutures
-    with TransactionCounter
     with Matchers
     with StreamLogging
     with DbUtils
@@ -43,8 +43,6 @@ trait ArtifactStoreBehaviorBase
     with IntegrationPatience
     with BeforeAndAfterEach
     with BeforeAndAfterAll {
-
-  override val instanceOrdinal = 0
 
   //Bring in sync the timeout used by ScalaFutures and DBUtils
   implicit override val patienceConfig: PatienceConfig = PatienceConfig(timeout = dbOpTimeout)
@@ -64,11 +62,13 @@ trait ArtifactStoreBehaviorBase
   }
 
   override def afterAll(): Unit = {
+    assertAttachmentStoreIsEmpty()
     println("Shutting down store connections")
     authStore.shutdown()
     entityStore.shutdown()
     activationStore.shutdown()
     super.afterAll()
+    assertAttachmentStoresAreClosed()
   }
 
   //~----------------------------------------< utility methods >
@@ -108,7 +108,8 @@ trait ArtifactStoreBehaviorBase
   }
 
   protected def wskNS(name: String) = {
-    WhiskNamespace(EntityName(name), AuthKey())
+    val uuid = UUID()
+    WhiskNamespace(Namespace(EntityName(name), uuid), AuthKey(uuid, Secret()))
   }
 
   private val exec = BlackBoxExec(ExecManifest.ImageName("image"), None, None, native = false)
@@ -140,4 +141,30 @@ trait ArtifactStoreBehaviorBase
   protected def getJsField(js: JsObject, subObject: String, fieldName: String): JsValue = {
     js.fields(subObject).asJsObject().fields(fieldName)
   }
+
+  protected def getAttachmentStore(store: ArtifactStore[_]): Option[AttachmentStore]
+
+  protected def getAttachmentCount(store: AttachmentStore): Option[Int] = store match {
+    case s: MemoryAttachmentStore => Some(s.attachmentCount)
+    case _                        => None
+  }
+
+  private def assertAttachmentStoreIsEmpty(): Unit = {
+    Seq(authStore, entityStore, activationStore).foreach { s =>
+      for {
+        as <- getAttachmentStore(s)
+        count <- getAttachmentCount(as)
+      } require(count == 0, s"AttachmentStore not empty after all runs - $count")
+    }
+  }
+
+  private def assertAttachmentStoresAreClosed(): Unit = {
+    Seq(authStore, entityStore, activationStore).foreach { s =>
+      getAttachmentStore(s).foreach {
+        case s: MemoryAttachmentStore => require(s.isClosed, "AttachmentStore was not closed")
+        case _                        =>
+      }
+    }
+  }
+
 }
