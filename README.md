@@ -65,7 +65,7 @@ Download and install [VirtualBox](https://www.virtualbox.org/wiki/Downloads) and
 Follow these step to run your first OpenWhisk Action:
 ```
 # Clone openwhisk
-git clone --depth=1 -b https://github.com/kpavel/incubator-openwhisk.git openwhisk
+git clone --depth=1 -b lean https://github.com/kpavel/incubator-openwhisk.git openwhisk
 
 # Change directory to tools/vagrant
 cd openwhisk/tools/vagrant
