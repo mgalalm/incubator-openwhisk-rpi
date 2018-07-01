@@ -39,12 +39,12 @@ OpenWhisk is a cloud-first distributed event-based programming service. It provi
 The easiest way to start using OpenWhisk is to get Docker installed on on Mac, Windows or Linux. The [Docker website](https://docs.docker.com/install/) has details instructions on getting the tools installed. This does not give you a production deployment but gives you enough of the pieces to start writing functions and seeing them run.
 
 ```
-git clone -b lean git@github.ibm.com:elliot/docker-compose-lean.git
+git clone -b lean https://github.com/kpavel/incubator-openwhisk-devtools.git
 cd docker-compose-lean/docker-compose
 make quick-start
 ```
 
-For more detailed instructions or if you encounter problems see the [OpenWhisk-dev tools](https://github.ibm.com/elliot/docker-compose-lean/tree/lean/docker-compose/README.md) project.
+For more detailed instructions or if you encounter problems see the [OpenWhisk-dev tools](https://github.com/kpavel/incubator-openwhisk-devtools/tree/lean/docker-compose/README.md) project.
 
 ### Kubernetes Setup
 
@@ -65,7 +65,7 @@ Download and install [VirtualBox](https://www.virtualbox.org/wiki/Downloads) and
 Follow these step to run your first OpenWhisk Action:
 ```
 # Clone openwhisk
-git clone --depth=1 -b scale_down_2 git@github.ibm.com:elliot/EdgeWhisk.git openwhisk
+git clone --depth=1 -b https://github.com/kpavel/incubator-openwhisk.git openwhisk
 
 # Change directory to tools/vagrant
 cd openwhisk/tools/vagrant

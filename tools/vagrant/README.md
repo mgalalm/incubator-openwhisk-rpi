@@ -30,7 +30,7 @@ The following instructions were tested on Ubuntu 16.04 LTS.
 ### Clone the repository and change directory to `tools/vagrant`
 
 ```
-git clone --depth=1 -b scale_down_2 git@github.ibm.com:elliot/EdgeWhisk.git openwhisk
+git clone --depth=1 -b lean https://github.com/kpavel/incubator-openwhisk.git openwhisk
 cd openwhisk/tools/vagrant
 ```
 
