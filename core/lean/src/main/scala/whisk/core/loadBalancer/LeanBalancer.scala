@@ -44,7 +44,7 @@ import whisk.utils.ExecutionContextFactory
  * Horizontal sharding means, that each invoker's capacity is evenly divided between the loadbalancers. If an invoker
  * has at most 16 slots available, those will be divided to 8 slots for each loadbalancer (if there are 2).
  */
-class LeanBalancer(config: WhiskConfig, controllerInstance: InstanceId)(
+class LeanBalancer(config: WhiskConfig, controllerInstance: ControllerInstanceId)(
   implicit val actorSystem: ActorSystem,
   logging: Logging,
   materializer: ActorMaterializer)
@@ -67,7 +67,9 @@ class LeanBalancer(config: WhiskConfig, controllerInstance: InstanceId)(
     Future.successful(activationsPerNamespace.get(namespace).map(_.intValue()).getOrElse(0))
   override def totalActiveActivations: Future[Int] = Future.successful(totalActivations.intValue())
   override def clusterSize: Int = 1
-  val invokerName = InstanceId(0)
+
+  val invokerName = InvokerInstanceId(0)
+  val controllerName = ControllerInstanceId("controller-lean")
 
   /** 1. Publish a message to the loadbalancer */
   override def publish(action: ExecutableWhiskActionMetaData, msg: ActivationMessage)(
@@ -82,7 +84,7 @@ class LeanBalancer(config: WhiskConfig, controllerInstance: InstanceId)(
   /** 2. Update local state with the to be executed activation */
   private def setupActivation(msg: ActivationMessage,
                               action: ExecutableWhiskActionMetaData,
-                              instance: InstanceId): ActivationEntry = {
+                              instance: InvokerInstanceId): ActivationEntry = {
     
     totalActivations.increment()
     activationsPerNamespace.getOrElseUpdate(msg.user.namespace.uuid, new LongAdder()).increment()
@@ -114,7 +116,7 @@ class LeanBalancer(config: WhiskConfig, controllerInstance: InstanceId)(
   /** 3. Send the activation to the invoker */
   private def sendActivationToInvoker(producer: MessageProducer,
                                       msg: ActivationMessage,
-                                      invoker: InstanceId): Future[RecordMetadata] = {
+                                      invoker: InvokerInstanceId): Future[RecordMetadata] = {
     implicit val transid: TransactionId = msg.transid
     logging.info(this, "in LeanBalancer.sendActivationToInvoker")
 
@@ -146,7 +148,7 @@ class LeanBalancer(config: WhiskConfig, controllerInstance: InstanceId)(
    * Subscribes to active acks (completion messages from the invokers), and
    * registers a handler for received active acks from invokers.
    */
-  private val activeAckTopic = s"completed${controllerInstance.toInt}"
+  private val activeAckTopic = s"completed${controllerInstance.asString}"
   private val maxActiveAcksPerPoll = 128
   private val activeAckPollDuration = 1.second
   private val activeAckConsumer =
@@ -180,7 +182,7 @@ class LeanBalancer(config: WhiskConfig, controllerInstance: InstanceId)(
   private def processCompletion(response: Either[ActivationId, WhiskActivation],
                                 tid: TransactionId,
                                 forced: Boolean,
-                                invoker: InstanceId): Unit = {
+                                invoker: InvokerInstanceId): Unit = {
     val aid = response.fold(l => l, r => r.activationId)
 
     // treat left as success (as it is the result of a message exceeding the bus limit)
@@ -227,23 +229,21 @@ class LeanBalancer(config: WhiskConfig, controllerInstance: InstanceId)(
     implicit val ec = ExecutionContextFactory.makeCachedThreadPoolExecutionContext()
     val actorSystema: ActorSystem =
       ActorSystem(name = "invoker-actor-system", defaultExecutionContext = Some(ec))
-    val invoker = new InvokerReactive(config, InstanceId(0), messageProducer)(actorSystema, implicitly)
+    val invoker = new InvokerReactive(config, invokerName, messageProducer)(actorSystema, implicitly)
   }
   
   getInvoker()
-  
-//  val invoker = new InvokerReactive(config, InstanceId(0), messageProducer)
 }
 
 object LeanBalancer extends LoadBalancerProvider {
 
-  override def loadBalancer(whiskConfig: WhiskConfig, instance: InstanceId)(
+  override def loadBalancer(whiskConfig: WhiskConfig, instance: ControllerInstanceId)(
     implicit actorSystem: ActorSystem,
     logging: Logging,
     materializer: ActorMaterializer): LoadBalancer = new LeanBalancer(whiskConfig, instance)
 
     def requiredProperties =
-      Map(servicePort -> 8080.toString(), dockerRegistry -> null, dockerImagePrefix -> null) ++
+      Map(servicePort -> 8080.toString(),  runtimesRegistry -> "") ++
       ExecManifest.requiredProperties ++
-      wskApiHost ++ Map(dockerImageTag -> "latest")
+      wskApiHost
 }

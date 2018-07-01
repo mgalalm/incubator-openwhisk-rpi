@@ -14,10 +14,10 @@
     controller_index: 0
 
 - name: "pull the {{ docker.image.tag }} image of controller"
-  shell:
-    docker pull
-    {{ docker_registry~docker.image.prefix }}/lean:{{docker.image.tag}}
+  shell: "docker pull {{docker_registry}}{{ docker.image.prefix }}/lean:{{docker.image.tag}}"
   when: docker_registry != ""
+  register: result
+  until: (result.rc == 0)
   retries: "{{ docker.pull.retries }}"
   delay: "{{ docker.pull.delay }}"
 
@@ -118,9 +118,9 @@
       "COMPONENT_NAME": "{{ controller_name }}"
       "PORT": 8080
 
-      "WHISK_VERSION_NAME": "{{ whisk_version_name }}"
-      "WHISK_VERSION_DATE": "{{ whisk.version.date }}"
-      "WHISK_VERSION_BUILDNO": "{{ docker.image.tag }}"
+      "CONFIG_whisk_info_date": "{{ whisk.version.date }}"
+      "CONFIG_whisk_info_buildNo": "{{ docker.image.tag }}"
+
       "CONFIG_whisk_couchdb_protocol": "{{ db_protocol }}"
       "CONFIG_whisk_couchdb_host": "{{ db_host }}"
       "CONFIG_whisk_couchdb_port": "{{ db_port }}"
@@ -191,7 +191,6 @@
       "CONFIG_kamon_statsd_port": "{{ metrics.kamon.port }}"
 
       "CONFIG_whisk_spi_LogStoreProvider": "{{ userLogs.spi }}"
-      
       "CONFIG_whisk_spi_MessagingProvider": "whisk.connector.lean.LeanMessagingProvider"
       "CONFIG_whisk_spi_LoadBalancerProvider": "whisk.core.loadBalancer.LeanBalancer"
 
@@ -228,7 +227,7 @@
   docker_container:
     name: "{{ controller_name }}"
     image:
-      "{{docker_registry~docker.image.prefix}}/lean:{{docker.image.tag}}"    
+      "{{docker_registry~docker.image.prefix}}/lean:{{docker.image.tag}}"
     userns_mode: "host"
     pid_mode: "host"
     privileged: "yes"
@@ -259,3 +258,4 @@
   delay: 5
 
 # VIM: let b:syntastic_yaml_yamllint_args="-c '".expand('%:p:h')."../../../yamllint.yml'"
+
