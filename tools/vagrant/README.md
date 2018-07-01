@@ -17,9 +17,9 @@
 #
 -->
 
-# OpenWhisk on Vagrant
+# OpenWhisk (Lean) on Vagrant
 
-The following instructions were tested on Mac OS X El Capitan, Ubuntu 16.04 LTS.
+The following instructions were tested on Ubuntu 16.04 LTS.
 
 ## Requirements
 -   Install [VirtualBox](https://www.virtualbox.org/wiki/Downloads) (tested with version 5.2.8)
@@ -30,8 +30,16 @@ The following instructions were tested on Mac OS X El Capitan, Ubuntu 16.04 LTS.
 ### Clone the repository and change directory to `tools/vagrant`
 
 ```
-git clone --depth=1 https://github.com/apache/incubator-openwhisk.git openwhisk
+git clone --depth=1 -b scale_down_2 git@github.ibm.com:elliot/EdgeWhisk.git openwhisk
 cd openwhisk/tools/vagrant
+```
+
+## To deploy Lean controller (composed from invoker + controller) without deploying Kafka, zookeeper, invoker...etc.
+
+### Set environment variable LEAN to true
+
+```
+export LEAN=true
 ```
 
 ### Create a Vagrant VM

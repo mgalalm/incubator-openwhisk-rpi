@@ -69,7 +69,7 @@ controller:
   instances: "{{ groups['controllers'] | length }}"
   localBookkeeping: "{{ controller_local_bookkeeping | default('false') }}"
   akka:
-    provider: cluster
+    provider: "{{ controller_akka_provider | default('cluster') }}"
     cluster:
       basePort: 8000
       host: "{{ groups['controllers'] | map('extract', hostvars, 'ansible_host') | list }}"
@@ -240,6 +240,7 @@ linux:
 
 couchdb:
   version: 2.1
+  pull_couchdb: false
 
 docker:
   # The user to install docker for. Defaults to the ansible user if not set. This will be the user who is able to run

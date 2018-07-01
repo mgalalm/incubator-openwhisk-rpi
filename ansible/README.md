@@ -147,7 +147,7 @@ ansible-playbook -i environments/<environment> couchdb.yml
 ansible-playbook -i environments/<environment> initdb.yml
 ansible-playbook -i environments/<environment> wipe.yml
 ansible-playbook -i environments/<environment> apigateway.yml
-ansible-playbook -i environments/<environment> openwhisk.yml
+ansible-playbook -i environments/<environment> openwhisk-lean.yml
 ansible-playbook -i environments/<environment> postdeploy.yml
 ```
 
