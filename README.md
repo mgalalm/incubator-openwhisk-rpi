@@ -29,7 +29,6 @@ OpenWhisk is a cloud-first distributed event-based programming service. It provi
 
 * [Quick Start](#quick-start) (Docker-Compose)
 * [Native development](#native-development) (Mac and Ubuntu)
-* [Kubernetes](#kubernetes-setup)
 * [Vagrant](#vagrant-setup)
 * [Learn concepts and commands](#learn-concepts-and-commands)
 * [Issues](#issues)
@@ -45,16 +44,6 @@ make quick-start
 ```
 
 For more detailed instructions or if you encounter problems see the [OpenWhisk-dev tools](https://github.com/kpavel/incubator-openwhisk-devtools/tree/lean/docker-compose/README.md) project.
-
-### Kubernetes Setup
-
-Another path to quickly starting to use OpenWhisk is to install it on a Kubernetes cluster.  OpenWhisk can be installed on Minikube, on a managed Kubernetes cluster provisioned from a public cloud provider, or on a Kubernetes cluster you manage yourself. To get started,
-
-```
-git clone https://github.com/apache/incubator-openwhisk-deploy-kube.git
-```
-
-Then follow the instructions in the [OpenWhisk on Kubernetes README.md](https://github.com/apache/incubator-openwhisk-deploy-kube/blob/master/README.md).
 
 ### Vagrant Setup
 A [Vagrant](http://vagrantup.com) machine is also available to run OpenWhisk on Mac, Windows PC or GNU/Linux but isn't used by as much of the dev team so sometimes lags behind.
