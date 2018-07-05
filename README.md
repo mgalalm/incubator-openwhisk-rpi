@@ -35,7 +35,21 @@ OpenWhisk is a cloud-first distributed event-based programming service. It provi
 * [Slack](#slack)
 
 ### Quick Start
-The easiest way to start using OpenWhisk is to get Docker installed on on Mac, Windows or Linux. The [Docker website](https://docs.docker.com/install/) has details instructions on getting the tools installed. This does not give you a production deployment but gives you enough of the pieces to start writing functions and seeing them run.
+The easiest way to start using OpenWhisk is to use Docker-Compose. 
+
+#### Prerequisites
+
+The following are required to build and deploy OpenWhisk with Docker Compose:
+
+- Mac OSX:
+    - [Docker for Mac](https://www.docker.com/docker-mac) - only this currently works on Mac OSX
+      + Install via homebrew: `brew cask install docker`
+- Other Systems:
+    - [Docker 1.13+](https://www.docker.com/products/docker)
+    - [Docker Compose 1.6+](https://docs.docker.com/compose/install/)
+- [Java 8](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
+
+This option does not result in a production grade deployment, but gives you enough of the pieces to start writing functions and seeing them run.
 
 ```
 git clone -b lean https://github.com/kpavel/incubator-openwhisk-devtools.git
