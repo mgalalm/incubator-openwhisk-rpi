@@ -1,0 +1,31 @@
+apply plugin: 'scala'
+apply plugin: 'application'
+apply plugin: 'eclipse'
+apply plugin: 'maven'
+
+ext.dockerImageName = 'lean'
+apply from: '../../gradle/docker.gradle'
+distDocker.dependsOn ':common:scala:distDocker', 'distTar'
+
+project.archivesBaseName = "openwhisk-lean"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile "org.scala-lang:scala-library:${gradle.scala.version}"
+    compile 'com.lightbend.akka.management:akka-management-cluster-bootstrap_2.11:0.11.0'
+    compile 'com.lightbend.akka.discovery:akka-discovery-kubernetes-api_2.11:0.11.0'
+    compile 'com.lightbend.akka.discovery:akka-discovery-marathon-api_2.11:0.11.0'
+    compile project(':common:scala')
+    compile project(':core:controller')
+    compile project(':core:invoker')
+}
+
+tasks.withType(ScalaCompile) {
+    scalaCompileOptions.additionalParameters = gradle.scala.compileFlags
+}
+
+mainClassName = "whisk.core.controller.Controller"
+applicationDefaultJvmArgs = ["-Djava.security.egd=file:/dev/./urandom","-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=7777","-XX:NativeMemoryTracking=summary","-XX:+UseConcMarkSweepGC","-XX:MaxDirectMemorySize=150m"]

@@ -70,7 +70,7 @@ controller:
   instances: "{{ groups['controllers'] | length }}"
   localBookkeeping: "{{ controller_local_bookkeeping | default('false') }}"
   akka:
-    provider: cluster
+    provider: "{{ controller_akka_provider | default('cluster') }}"
     cluster:
       basePort: 8000
       host: "{{ groups['controllers'] | map('extract', hostvars, 'ansible_host') | list }}"

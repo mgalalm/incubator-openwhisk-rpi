@@ -31,6 +31,7 @@ OpenWhisk is a cloud-first distributed event-based programming service. It provi
 * [Native development](#native-development) (Mac and Ubuntu)
 * [Kubernetes](#kubernetes-setup)
 * [Vagrant](#vagrant-setup)
+* [Lean](#lean-setup)
 * [Learn concepts and commands](#learn-concepts-and-commands)
 * [Issues](#issues)
 * [Slack](#slack)
@@ -94,6 +95,45 @@ If you plan to make contributions to OpenWhisk, we recommend either a Mac or Ubu
 
 * [Setup Mac for OpenWhisk](tools/macos/README.md)
 * [Setup Ubuntu for OpenWhisk](tools/ubuntu-setup/README.md)
+
+### Lean Setup
+To have a lean setup (no Kafka, Zookeeper and no Invokers as separate entities), consider the following options.
+
+**Docker Compose**
+```
+git clone -b lean https://github.com/kpavel/incubator-openwhisk-devtools.git
+cd incubator-openwhisk-devtools/docker-compose
+make quick-start
+```
+
+For more detailed instructions or if you encounter problems see the [OpenWhisk-dev tools](https://github.com/kpavel/incubator-openwhisk-devtools/tree/lean/docker-compose/README.md) project.
+
+**Native**
+Follow instructions in the [Native development](#native-development) document until the [Deploying Using CouchDB](ansible/README.md#deploying-using-cloudant) step. At this point, replace:
+```
+ansible-playbook -i environments/<environment> openwhisk.yml
+```
+by:
+```
+ansible-playbook -i environments/<environment> openwhisk-lean.yml
+```
+
+**Kubernetes**
+Another path to quickly starting to use Lean OpenWhisk is to install it on a Kubernetes cluster.  Lean OpenWhisk can be installed on Minikube, on a managed Kubernetes cluster provisioned from a public cloud provider, or on a Kubernetes cluster you manage yourself. To get started,
+
+```
+git clone https://github.com/kpavel/incubator-openwhisk-deploy-kube.git
+```
+
+Follow the regular instructions in the [OpenWhisk on Kubernetes README.md](https://github.com/apache/incubator-openwhisk-deploy-kube/blob/master/README.md) until [Customize the Deployment](https://github.com/apache/incubator-openwhisk-deploy-kube/blob/master/README.md#customize-the-deployment) step. At this point add this [Lean configuration](https://github.com/kpavel/incubator-openwhisk-deploy-kube/blob/lean/docs/configurationChoices.md#lean-openwhisk) to your cluster.
+
+**Vagrant**
+Set environment variable LEAN to true
+```
+export LEAN=true
+```
+and continue with [Regular Vagrant Setup](#vagrant-setup) steps
+
 
 ### Learn concepts and commands
 
