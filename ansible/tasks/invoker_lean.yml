@@ -52,14 +52,10 @@
     dockerInfo: "{{ dockerInfo_output.stdout|from_json }}"
   when: environmentInformation.type != "docker-machine"
 
-- name: prepare invoker ports
-  set_fact:
-    invoker_ports: ["{{ invoker.port }}:8080"]
-
 - name: expose additional ports if jmxremote is enabled
   when: jmx.enabled
   set_fact:
-    invoker_ports: "{{ invoker_ports }} + [ \"{{ jmx.basePortInvoker }}:{{ jmx.basePortInvoker }}\" ] + [ \"{{ jmx.rmiBasePortInvoker }}:{{ jmx.rmiBasePortInvoker }}\" ]"
+    invoker_ports: "[ \"{{ jmx.basePortInvoker }}:{{ jmx.basePortInvoker }}\" ] + [ \"{{ jmx.rmiBasePortInvoker }}:{{ jmx.rmiBasePortInvoker }}\" ]"
 
 - name: prepare invoker env
   set_fact:
@@ -82,8 +78,8 @@
       "CONFIG_whisk_couchdb_protocol": "{{ db.protocol }}"
       "CONFIG_whisk_couchdb_host": "{{ db.host }}"
       "CONFIG_whisk_couchdb_port": "{{ db.port }}"
-      "CONFIG_whisk_couchdb_username": "{{ db.credentials.admin.user }}"
-      "CONFIG_whisk_couchdb_password": "{{ db.credentials.admin.pass }}"
+      "CONFIG_whisk_couchdb_username": "{{ db.credentials.invoker.user }}"
+      "CONFIG_whisk_couchdb_password": "{{ db.credentials.invoker.pass }}"
       "CONFIG_whisk_couchdb_provider": "{{ db.provider }}"
       "CONFIG_whisk_couchdb_databases_WhiskAuth": "{{ db.whisk.auth }}"
       "CONFIG_whisk_couchdb_databases_WhiskEntity": "{{ db.whisk.actions }}"

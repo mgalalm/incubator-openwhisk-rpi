@@ -72,6 +72,8 @@
   include_tasks: "{{ openwhisk_home }}/ansible/tasks/db/checkDb.yml"
   vars:
     dbName: "{{ item }}"
+    dbUser: "{{ db.credentials.invoker.user }}"
+    dbPass: "{{ db.credentials.invoker.pass }}"
   with_items:
     - "{{ db.whisk.actions }}"
     - "{{ db.whisk.auth }}"
@@ -124,8 +126,8 @@
       "CONFIG_whisk_couchdb_protocol": "{{ db.protocol }}"
       "CONFIG_whisk_couchdb_host": "{{ db.host }}"
       "CONFIG_whisk_couchdb_port": "{{ db.port }}"
-      "CONFIG_whisk_couchdb_username": "{{ db.credentials.admin.user }}"
-      "CONFIG_whisk_couchdb_password": "{{ db.credentials.admin.pass }}"
+      "CONFIG_whisk_couchdb_username": "{{ db.credentials.controller.user }}"
+      "CONFIG_whisk_couchdb_password": "{{ db.credentials.controller.pass }}"
       "CONFIG_whisk_couchdb_provider": "{{ db.provider }}"
       "CONFIG_whisk_couchdb_databases_WhiskAuth": "{{ db.whisk.auth }}"
       "CONFIG_whisk_couchdb_databases_WhiskEntity": "{{ db.whisk.actions }}"
@@ -186,6 +188,8 @@
         "{{ invoker.busyThreshold }}"
       "CONFIG_whisk_loadbalancer_blackboxFraction":
         "{{ controller.blackboxFraction }}"
+      "CONFIG_whisk_loadbalancer_timeoutFactor":
+        "{{ controller.timeoutFactor }}"
 
       "CONFIG_kamon_statsd_hostname": "{{ metrics.kamon.host }}"
       "CONFIG_kamon_statsd_port": "{{ metrics.kamon.port }}"

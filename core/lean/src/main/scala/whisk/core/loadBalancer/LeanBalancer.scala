@@ -24,6 +24,7 @@ import akka.actor.{ActorSystem, Props}
 import akka.event.Logging.InfoLevel
 import akka.stream.ActorMaterializer
 import org.apache.kafka.clients.producer.RecordMetadata
+import pureconfig._
 import whisk.spi.SpiLoader
 import whisk.core.entity._
 import whisk.core.entity.size._
@@ -32,7 +33,7 @@ import whisk.common._
 import whisk.core.WhiskConfig._
 import whisk.core.connector._
 import whisk.core.WhiskConfig
-
+import whisk.core.ConfigKeys
 import scala.collection.concurrent.TrieMap
 import scala.concurrent.duration._
 import scala.concurrent.{ExecutionContext, Future, Promise}
@@ -52,6 +53,8 @@ class LeanBalancer(config: WhiskConfig, controllerInstance: ControllerInstanceId
     extends LoadBalancer {
 
   private implicit val executionContext: ExecutionContext = actorSystem.dispatcher
+
+  private val lbConfig = loadConfigOrThrow[ShardingContainerPoolBalancerConfig](ConfigKeys.loadbalancer)
 
   /** State related to invocations and throttling */
   private val activations = TrieMap[ActivationId, ActivationEntry]()
@@ -95,7 +98,7 @@ class LeanBalancer(config: WhiskConfig, controllerInstance: ControllerInstanceId
     totalActivations.increment()
     totalActivationMemory.add(action.limits.memory.megabytes)
     activationsPerNamespace.getOrElseUpdate(msg.user.namespace.uuid, new LongAdder()).increment()
-    val timeout = action.limits.timeout.duration.max(TimeLimit.STD_DURATION) + 1.minute
+    val timeout = (action.limits.timeout.duration.max(TimeLimit.STD_DURATION) * lbConfig.timeoutFactor) + 1.minute
     // Install a timeout handler for the catastrophic case where an active ack is not received at all
     // (because say an invoker is down completely, or the connection to the message bus is disrupted) or when
     // the active ack is significantly delayed (possibly dues to long queues but the subject should not be penalized);
@@ -241,7 +244,7 @@ class LeanBalancer(config: WhiskConfig, controllerInstance: ControllerInstanceId
 
 object LeanBalancer extends LoadBalancerProvider {
 
-  override def loadBalancer(whiskConfig: WhiskConfig, instance: ControllerInstanceId)(
+  override def instance(whiskConfig: WhiskConfig, instance: ControllerInstanceId)(
     implicit actorSystem: ActorSystem,
     logging: Logging,
     materializer: ActorMaterializer): LoadBalancer = new LeanBalancer(whiskConfig, instance)
