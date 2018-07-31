@@ -24,9 +24,12 @@ import whisk.common.Logging
 import whisk.core.connector.Message
 import whisk.core.connector.MessageProducer
 
-import java.util.concurrent.{BlockingQueue, ConcurrentMap, LinkedBlockingQueue}
+import java.util.concurrent.{BlockingQueue, LinkedBlockingQueue}
+import scala.collection.concurrent.Map
+import java.nio.charset.StandardCharsets
 
-class LeanProducer(queues: ConcurrentMap[String, BlockingQueue[Array[Byte]]])(implicit logging: Logging)
+
+class LeanProducer(queues: Map[String, BlockingQueue[Array[Byte]]])(implicit logging: Logging)
     extends MessageProducer {
 
   override def sentCount(): Long = sentCounter.cur
@@ -36,24 +39,16 @@ class LeanProducer(queues: ConcurrentMap[String, BlockingQueue[Array[Byte]]])(im
     implicit val transid = msg.transid
 
     logging.debug(this, s"sending to topic '$topic' msg '$msg'")
-    var queue = queues.get(topic)
-    try {
-      queue.put(msg.serialize.getBytes("UTF-8"))
-      sentCounter.next()
-    } catch {
-      //TODO: shouldn't get here
-      case npe: NullPointerException => {
-        queue = new LinkedBlockingQueue[Array[Byte]]()
-        queues.put(topic, queue)
-        queue.put(msg.serialize.getBytes("UTF-8"))
-      }
-    }
+    var queue = queues.getOrElseUpdate(topic, new LinkedBlockingQueue[Array[Byte]]())
+    queue.put(msg.serialize.getBytes(StandardCharsets.UTF_8))
+    sentCounter.next()
+    
     Future.successful(null)
   }
 
   /** Closes producer. */
   override def close(): Unit = {
-    logging.info(this, "closing my producer")
+    logging.info(this, "closing lean producer")
   }
 
   private val sentCounter = new Counter()

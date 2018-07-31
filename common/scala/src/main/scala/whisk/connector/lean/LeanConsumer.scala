@@ -29,14 +29,9 @@ class LeanConsumer(queue: BlockingQueue[Array[Byte]], override val maxPeek: Int)
   /**
    */
   override def peek(duration: FiniteDuration, retry: Int): Iterable[(String, Int, Long, Array[Byte])] = {
-    val record = queue.poll(duration.toMillis, TimeUnit.MILLISECONDS)
-
-    //TODO: currently returns record in the format below, should be refactored of kafka later
-    if (record != null) {
-      Iterable(("", 0, 0, record))
-    } else {
-      Iterable()
-    }
+    Option(queue.poll(duration.toMillis, TimeUnit.MILLISECONDS))
+    .map(record => Iterable(("", 0, 0L, record)))
+    .getOrElse(Iterable.empty)
   }
 
   /**
@@ -44,6 +39,6 @@ class LeanConsumer(queue: BlockingQueue[Array[Byte]], override val maxPeek: Int)
   override def commit(retry: Int): Unit = { /*do nothing*/ }
 
   override def close(): Unit = {
-    logging.info(this, s"closing myconsumer")
+    logging.info(this, s"closing lean consumer")
   }
 }

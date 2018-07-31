@@ -42,10 +42,10 @@ import whisk.core.invoker.InvokerReactive
 import whisk.utils.ExecutionContextFactory
 
 /**
- * A loadbalancer that uses "horizontal" sharding to not collide with fellow loadbalancers.
- *
- * Horizontal sharding means, that each invoker's capacity is evenly divided between the loadbalancers. If an invoker
- * has at most 16 slots available, those will be divided to 8 slots for each loadbalancer (if there are 2).
+ * Lean loadbalancer implemetation.
+ * 
+ * Communicates with Invoker directly without Kafka in the middle. Invoker does not exist as a separate entity, it is built together with Controller
+ * Uses LeanMessagingProvider to use in-memory queue instead of Kafka
  */
 class LeanBalancer(config: WhiskConfig, controllerInstance: ControllerInstanceId)(implicit val actorSystem: ActorSystem,
                                                                                   logging: Logging,
@@ -61,9 +61,6 @@ class LeanBalancer(config: WhiskConfig, controllerInstance: ControllerInstanceId
   private val activationsPerNamespace = TrieMap[UUID, LongAdder]()
   private val totalActivations = new LongAdder()
   private val totalActivationMemory = new LongAdder()
-
-  /** State needed for scheduling. */
-  private val schedulingState = ShardingContainerPoolBalancerState()()
 
   actorSystem.scheduler.schedule(0.seconds, 10.seconds) {
     MetricEmitter.emitHistogramMetric(LOADBALANCER_ACTIVATIONS_INFLIGHT(controllerInstance), totalActivations.longValue)
@@ -83,7 +80,6 @@ class LeanBalancer(config: WhiskConfig, controllerInstance: ControllerInstanceId
   /** 1. Publish a message to the loadbalancer */
   override def publish(action: ExecutableWhiskActionMetaData, msg: ActivationMessage)(
     implicit transid: TransactionId): Future[Future[Either[ActivationId, WhiskActivation]]] = {
-    logging.info(this, "in LeanBalancer.publish")
     val entry = setupActivation(msg, action, invokerName)
     sendActivationToInvoker(messageProducer, msg, invokerName).map { _ =>
       entry.promise.future
@@ -128,7 +124,6 @@ class LeanBalancer(config: WhiskConfig, controllerInstance: ControllerInstanceId
                                       msg: ActivationMessage,
                                       invoker: InvokerInstanceId): Future[RecordMetadata] = {
     implicit val transid: TransactionId = msg.transid
-    logging.info(this, "in LeanBalancer.sendActivationToInvoker")
 
     val topic = s"invoker${invoker.toInt}"
 
@@ -139,13 +134,10 @@ class LeanBalancer(config: WhiskConfig, controllerInstance: ControllerInstanceId
       s"posting topic '$topic' with activation id '${msg.activationId}'",
       logLevel = InfoLevel)
 
-    logging.info(this, "before producer.send")
     producer.send(topic, msg).andThen {
       case Success(status) =>
-        logging.info(this, "producer.send finished with Success")
         transid.finished(this, start, s"posted to $topic", logLevel = InfoLevel)
       case Failure(_) =>
-        logging.info(this, "producer.send finished with Failure")
         transid.failed(this, start, s"error on posting to topic $topic")
     }
   }
@@ -191,20 +183,10 @@ class LeanBalancer(config: WhiskConfig, controllerInstance: ControllerInstanceId
                                 invoker: InvokerInstanceId): Unit = {
     val aid = response.fold(l => l, r => r.activationId)
 
-    // treat left as success (as it is the result of a message exceeding the bus limit)
-    val isSuccess = response.fold(_ => true, r => !r.response.isWhiskError)
-    logging.info(this, "in processCompletion, aid: " + aid)
-    logging.info(
-      this,
-      "totalActivations: " + totalActivations
-        .toString() + " ctivationsPerNamespace.get(entry.namespaceId): " + activationsPerNamespace.toString())
-
     activations.remove(aid) match {
       case Some(entry) =>
-        logging.info(this, "in processCompletion Some!!!")
         totalActivations.decrement()
         activationsPerNamespace.get(entry.namespaceId).foreach(_.decrement())
-//        schedulingState.invokerSlots.lift(invoker.toInt).foreach(_.release())
 
         if (!forced) {
           entry.timeoutHandler.cancel()
@@ -214,20 +196,16 @@ class LeanBalancer(config: WhiskConfig, controllerInstance: ControllerInstanceId
         }
 
         logging.info(this, s"${if (!forced) "received" else "forced"} active ack for '$aid'")(tid)
-      // Active acks that are received here are strictly from user actions - health actions are not part of
-      // the load balancer's activation map. Inform the invoker pool supervisor of the user action completion.
-//        invokerPool ! InvocationFinishedMessage(invoker, isSuccess)
+        // Active acks that are received here are strictly from user actions - health actions are not part of
+        // the load balancer's activation map. Inform the invoker pool supervisor of the user action completion.
       case None if !forced =>
         // the entry has already been removed but we receive an active ack for this activation Id.
         // This happens for health actions, because they don't have an entry in Loadbalancerdata or
         // for activations that already timed out.
-//        invokerPool ! InvocationFinishedMessage(invoker, isSuccess)
-        logging.info(this, "in processCompletion None1")
         logging.info(this, s"received active ack for '$aid' which has no entry")(tid)
       case None =>
         // the entry has already been removed by an active ack. This part of the code is reached by the timeout.
         // As the active ack is already processed we don't have to do anything here.
-        logging.info(this, "in processCompletion None2")
         logging.info(this, s"forced active ack for '$aid' which has no entry")(tid)
     }
   }

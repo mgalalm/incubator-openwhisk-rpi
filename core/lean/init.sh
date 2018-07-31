@@ -5,6 +5,6 @@
 
 ./copyJMXFiles.sh
 
-export LEAN_OPTS="$CONTROLLER_OPTS -Dakka.remote.netty.tcp.bind-hostname=$(hostname -i) $(./transformEnvironment.sh)"
+export LEAN_OPTS="$CONTROLLER_OPTS $(./transformEnvironment.sh)"
 
 exec lean/bin/lean "$@"

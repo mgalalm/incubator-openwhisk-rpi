@@ -18,11 +18,13 @@
 package whisk.connector.lean
 
 import java.util.concurrent.BlockingQueue
-import java.util.concurrent.ConcurrentHashMap
-import java.util.concurrent.ConcurrentMap
 import java.util.concurrent.LinkedBlockingQueue
 
+import scala.collection.concurrent.Map
+import scala.collection.concurrent.TrieMap
 import scala.concurrent.duration.FiniteDuration
+import scala.util.Success
+import scala.util.Try
 
 import akka.actor.ActorSystem
 import whisk.common.Logging
@@ -30,34 +32,28 @@ import whisk.core.WhiskConfig
 import whisk.core.connector.MessageConsumer
 import whisk.core.connector.MessageProducer
 import whisk.core.connector.MessagingProvider
-import scala.util.Success
-import scala.util.{Success, Try}
 
 /**
  * A simple implementation of MessagingProvider
  */
 object LeanMessagingProvider extends MessagingProvider {
 
-  val queues: ConcurrentMap[String, BlockingQueue[Array[Byte]]] =
-    new ConcurrentHashMap[String, BlockingQueue[Array[Byte]]]
+  val queues: Map[String, BlockingQueue[Array[Byte]]] =
+    new TrieMap[String, BlockingQueue[Array[Byte]]]
 
   def getConsumer(config: WhiskConfig, groupId: String, topic: String, maxPeek: Int, maxPollInterval: FiniteDuration)(
     implicit logging: Logging,
     actorSystem: ActorSystem): MessageConsumer = {
 
-    var queue = queues.get(topic)
-    if (queue == null) {
-      queue = new LinkedBlockingQueue[Array[Byte]](maxPeek)
-      queues.put(topic, queue)
-    }
-
+    var queue = queues.getOrElseUpdate(topic, new LinkedBlockingQueue[Array[Byte]](maxPeek))
     new LeanConsumer(queue, maxPeek)
   }
+
   def getProducer(config: WhiskConfig)(implicit logging: Logging, actorSystem: ActorSystem): MessageProducer =
     new LeanProducer(queues)
 
   def ensureTopic(config: WhiskConfig, topic: String, topicConfig: String)(implicit logging: Logging): Try[Unit] = {
-    if (queues.containsKey(topic)) {
+    if (queues.contains(topic)) {
       Success(logging.info(this, s"topic $topic already existed"))
     } else {
       queues.put(topic, new LinkedBlockingQueue[Array[Byte]](Integer.MAX_VALUE))
