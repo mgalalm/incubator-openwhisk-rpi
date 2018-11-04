@@ -368,15 +368,15 @@ class ContainerProxy(
           // now rename container to action based name
           val newName =
             ContainerProxy.containerName(instance, job.msg.user.namespace.name.asString, job.action.name.asString)
-          container.rename(newName)
-        }
-        container.initialize(job.action.containerInitializer, actionTimeout).map(Some(_))
+          container.rename(newName).flatMap(_ => container.initialize(job.action.containerInitializer, actionTimeout).map(Some(_)))
+        } else {
+	  container.initialize(job.action.containerInitializer, actionTimeout).map(Some(_))
+	}
     }
 
     val activation: Future[WhiskActivation] = initialize
       .flatMap { initInterval =>
         val parameters = job.msg.content getOrElse JsObject.empty
-
         val authEnvironment = job.msg.user.authkey.toEnvironment
 
         val environment = JsObject(
