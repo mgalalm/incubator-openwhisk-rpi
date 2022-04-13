@@ -41,7 +41,8 @@
 
 - name: "(re)start CouchDB from '{{ couchdb_image }} ' "
   vars:
-    couchdb_image: "{{ couchdb.docker_image | default('apache/couchdb:' ~ couchdb.version ) }}"
+    couchdb_image: treehouses/couchdb:2.1.1
+    #couchdb_image: "{{ couchdb.docker_image | default('apache/couchdb:' ~ couchdb.version ) }}"
   docker_container:
     name: couchdb
     image: "{{ couchdb_image }}"

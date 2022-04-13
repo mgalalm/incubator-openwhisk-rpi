@@ -4,6 +4,7 @@
 # This playbook prepares ansible configuration
 
 - hosts: localhost
+  gather_facts: true
   tasks:
   # Generate hosts files
   - name: gen hosts if 'local' env is used

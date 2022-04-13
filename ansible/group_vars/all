@@ -272,8 +272,8 @@ linux:
 
 couchdb:
   docker_image: treehouses/couchdb
-  version: 2.1.0
-  pull_couchdb: true
+  version: 2.1.1
+  pull_couchdb: false
 
 docker:
   # The user to install docker for. Defaults to the ansible user if not set. This will be the user who is able to run
