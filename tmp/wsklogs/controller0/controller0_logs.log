@@ -1,0 +1,713 @@
+[2022-04-13T07:09:57.584Z] [INFO] Started the Kamon StatsD reporter
+[2022-04-13T07:09:57.587Z] [INFO] Loaded metric reporter [kamon.statsd.StatsDReporter]
+[2022-04-13T07:09:58.523Z] [INFO] Slf4jLogger started
+[2022-04-13T07:09:59.899Z] [INFO] [#tid_sid_unknown] [Config] environment set value for limits.triggers.fires.perMinute
+[2022-04-13T07:09:59.901Z] [INFO] [#tid_sid_unknown] [Config] environment set value for runtimes.registry
+[2022-04-13T07:09:59.902Z] [INFO] [#tid_sid_unknown] [Config] environment set value for limits.actions.sequence.maxLength
+[2022-04-13T07:09:59.904Z] [INFO] [#tid_sid_unknown] [Config] environment set value for limits.actions.invokes.concurrent
+[2022-04-13T07:09:59.906Z] [INFO] [#tid_sid_unknown] [Config] environment set value for controller.instances
+[2022-04-13T07:09:59.908Z] [INFO] [#tid_sid_unknown] [Config] environment set value for whisk.api.host.name
+[2022-04-13T07:09:59.910Z] [INFO] [#tid_sid_unknown] [Config] environment set value for limits.actions.invokes.perMinute
+[2022-04-13T07:09:59.911Z] [INFO] [#tid_sid_unknown] [Config] environment set value for whisk.api.host.proto
+[2022-04-13T07:09:59.913Z] [INFO] [#tid_sid_unknown] [Config] environment set value for whisk.api.host.port
+[2022-04-13T07:09:59.914Z] [INFO] [#tid_sid_unknown] [Config] environment set value for runtimes.manifest
+[2022-04-13T07:09:59.916Z] [INFO] [#tid_sid_unknown] [Config] environment set value for port
+[2022-04-13T07:10:00.231Z] [INFO] [#tid_sid_unknown] [LeanMessagingProvider] topic completed0 created
+[2022-04-13T07:10:00.233Z] [INFO] [#tid_sid_unknown] [LeanMessagingProvider] topic health created
+[2022-04-13T07:10:00.234Z] [INFO] [#tid_sid_unknown] [LeanMessagingProvider] topic cacheInvalidation created
+[2022-04-13T07:10:00.235Z] [INFO] [#tid_sid_unknown] [LeanMessagingProvider] topic events created
+[2022-04-13T07:10:00.667Z] [INFO] [#tid_sid_controller] [Controller] starting controller instance 0 [marker:controller_startup0_count:781]
+[2022-04-13T07:10:02.802Z] [INFO] [#tid_sid_dispatcher] [MessageFeed] handler capacity = 128, pipeline fill at = 128, pipeline depth = 256
+[2022-04-13T07:10:02.936Z] [INFO] [#tid_sid_dispatcher] [MessageFeed] handler capacity = 128, pipeline fill at = 128, pipeline depth = 256
+[2022-04-13T07:10:03.111Z] [INFO] Slf4jLogger started
+[2022-04-13T07:10:03.465Z] [INFO] [#tid_sid_unknown] [InvokerReactive] LogStoreProvider: class org.apache.openwhisk.core.containerpool.logging.DockerToActivationLogStore
+[2022-04-13T07:10:03.599Z] [INFO] [#tid_sid_unknown] [InvokerReactive] AAAAAAAAAA: poolConfig.userMemory: 1073741824 B, MemoryLimit.minMemory: 134217728 B
+[2022-04-13T07:10:04.299Z] [INFO] [#tid_sid_unknown] [DockerClientWithFileAccess] Detected docker client version 17.12.1-ce
+[2022-04-13T07:10:04.473Z] [INFO] [#tid_sid_invoker] [DockerClientWithFileAccess] running /usr/bin/docker ps --quiet --no-trunc --all --filter name=wsk0_ (timeout: 1 minute) [marker:invoker_docker.ps_start:4589]
+[2022-04-13T07:10:04.662Z] [INFO] [#tid_sid_invoker] [DockerClientWithFileAccess]  [marker:invoker_docker.ps_finish:4777:32]
+[2022-04-13T07:10:04.716Z] [INFO] [#tid_sid_invoker] [DockerContainerFactory] removing 0 action containers.
+[2022-04-13T07:10:05.992Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:6107]
+[2022-04-13T07:10:06.145Z] [INFO] [#tid_sid_dispatcher] [MessageFeed] handler capacity = 2000, pipeline fill at = 2000, pipeline depth = 4000
+[2022-04-13T07:10:06.195Z] [INFO] [#tid_sid_controller] [Controller] loadbalancer initialized: LeanBalancer
+[2022-04-13T07:10:06.198Z] [INFO] [#tid_sid_invokerWarmup] [ContainerPool] pre-warming 2 nodejs:6 256 MB
+[2022-04-13T07:10:06.630Z] [INFO] [#tid_sid_controller] [KindRestrictor] all kinds are allowed, the white-list is not specified
+[2022-04-13T07:10:06.853Z] [INFO] [#tid_sid_invokerWarmup] [DockerClientWithFileAccess] running /usr/bin/docker run -d --cpu-shares 256 --memory 256m --memory-swap 256m --network bridge -e __OW_API_HOST=https://172.17.0.1:443 --name wsk0_1_prewarm_nodejs6 --pids-limit 1024 --cap-drop NET_RAW --cap-drop NET_ADMIN --ulimit nofile=1024:1024 --log-driver json-file --env __OW_ALLOW_CONCURRENT=True kpavel/nodejs6action:rpi (timeout: 1 minute) [marker:invoker_docker.run_start:6968]
+[2022-04-13T07:10:06.856Z] [INFO] [#tid_sid_invokerWarmup] [DockerClientWithFileAccess] running /usr/bin/docker run -d --cpu-shares 256 --memory 256m --memory-swap 256m --network bridge -e __OW_API_HOST=https://172.17.0.1:443 --name wsk0_2_prewarm_nodejs6 --pids-limit 1024 --cap-drop NET_RAW --cap-drop NET_ADMIN --ulimit nofile=1024:1024 --log-driver json-file --env __OW_ALLOW_CONCURRENT=True kpavel/nodejs6action:rpi (timeout: 1 minute) [marker:invoker_docker.run_start:6972]
+[2022-04-13T07:10:07.423Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:7539:1431]
+[2022-04-13T07:10:07.432Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T07:10:08.592Z] [INFO] [#tid_sid_invokerWarmup] [DockerClientWithFileAccess]  [marker:invoker_docker.run_finish:8707:1739]
+[2022-04-13T07:10:08.752Z] [INFO] [#tid_sid_invokerWarmup] [DockerClientWithFileAccess]  [marker:invoker_docker.run_finish:8858:1886]
+[2022-04-13T07:10:09.465Z] [INFO] [#tid_sid_controller] [ActionsApi] actionSequenceLimit '50'
+[2022-04-13T07:15:05.959Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:306071]
+[2022-04-13T07:15:06.070Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:306186:114]
+[2022-04-13T07:15:06.072Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T07:20:05.979Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:606091]
+[2022-04-13T07:20:06.102Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:606218:126]
+[2022-04-13T07:20:06.104Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T07:25:05.997Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:906111]
+[2022-04-13T07:25:06.115Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:906231:119]
+[2022-04-13T07:25:06.116Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T07:30:06.017Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:1206131]
+[2022-04-13T07:30:06.147Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:1206263:128]
+[2022-04-13T07:30:06.148Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T07:35:06.036Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:1506151]
+[2022-04-13T07:35:06.168Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:1506283:131]
+[2022-04-13T07:35:06.169Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T07:40:06.057Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:1806172]
+[2022-04-13T07:40:06.183Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:1806299:127]
+[2022-04-13T07:40:06.184Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T07:45:06.087Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:2106200]
+[2022-04-13T07:45:06.212Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:2106328:127]
+[2022-04-13T07:45:06.213Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T07:50:06.106Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:2406221]
+[2022-04-13T07:50:06.213Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:2406329:108]
+[2022-04-13T07:50:06.215Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T07:55:06.126Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:2706240]
+[2022-04-13T07:55:06.243Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:2706358:117]
+[2022-04-13T07:55:06.246Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T08:00:06.146Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:3006261]
+[2022-04-13T08:00:06.270Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:3006386:124]
+[2022-04-13T08:00:06.272Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T08:05:06.167Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:3306280]
+[2022-04-13T08:05:06.283Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:3306398:117]
+[2022-04-13T08:05:06.285Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T08:10:06.187Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:3606302]
+[2022-04-13T08:10:06.296Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:3606412:109]
+[2022-04-13T08:10:06.298Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T08:15:06.206Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:3906321]
+[2022-04-13T08:15:06.317Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:3906433:112]
+[2022-04-13T08:15:06.318Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T08:20:06.227Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:4206341]
+[2022-04-13T08:20:06.340Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:4206456:114]
+[2022-04-13T08:20:06.341Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T08:25:06.246Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:4506360]
+[2022-04-13T08:25:06.366Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:4506482:120]
+[2022-04-13T08:25:06.367Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T08:30:06.266Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:4806381]
+[2022-04-13T08:30:06.368Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:4806484:102]
+[2022-04-13T08:30:06.369Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T08:35:06.286Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:5106400]
+[2022-04-13T08:35:06.388Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:5106503:102]
+[2022-04-13T08:35:06.391Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T08:40:06.307Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:5406421]
+[2022-04-13T08:40:06.410Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:5406526:102]
+[2022-04-13T08:40:06.412Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T08:45:06.326Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:5706440]
+[2022-04-13T08:45:06.428Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:5706543:102]
+[2022-04-13T08:45:06.430Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T08:50:06.346Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:6006461]
+[2022-04-13T08:50:06.457Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:6006572:109]
+[2022-04-13T08:50:06.459Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T08:55:06.369Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:6306481]
+[2022-04-13T08:55:06.479Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:6306595:113]
+[2022-04-13T08:55:06.480Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T09:00:06.387Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:6606501]
+[2022-04-13T09:00:06.502Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:6606618:115]
+[2022-04-13T09:00:06.503Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T09:05:06.416Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:6906530]
+[2022-04-13T09:05:06.530Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:6906646:114]
+[2022-04-13T09:05:06.533Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T09:10:06.436Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:7206551]
+[2022-04-13T09:10:06.533Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:7206649:97]
+[2022-04-13T09:10:06.535Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T09:15:06.456Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:7506570]
+[2022-04-13T09:15:06.563Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:7506678:107]
+[2022-04-13T09:15:06.565Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T09:20:06.477Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:7806591]
+[2022-04-13T09:20:06.600Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:7806716:124]
+[2022-04-13T09:20:06.602Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T09:25:06.499Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:8106610]
+[2022-04-13T09:25:06.605Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:8106721:109]
+[2022-04-13T09:25:06.607Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T09:30:06.516Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:8406631]
+[2022-04-13T09:30:06.617Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:8406733:102]
+[2022-04-13T09:30:06.618Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T09:35:06.540Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:8706650]
+[2022-04-13T09:35:06.648Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:8706764:113]
+[2022-04-13T09:35:06.650Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T09:40:06.557Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:9006671]
+[2022-04-13T09:40:06.673Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:9006788:116]
+[2022-04-13T09:40:06.675Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T09:45:06.579Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:9306690]
+[2022-04-13T09:45:06.678Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:9306793:102]
+[2022-04-13T09:45:06.679Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T09:50:06.597Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:9606711]
+[2022-04-13T09:50:06.718Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:9606833:121]
+[2022-04-13T09:50:06.719Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T09:55:06.616Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:9906730]
+[2022-04-13T09:55:06.721Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:9906837:106]
+[2022-04-13T09:55:06.722Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T10:00:06.635Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:10206750]
+[2022-04-13T10:00:06.733Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:10206849:97]
+[2022-04-13T10:00:06.734Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T10:05:06.657Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:10506771]
+[2022-04-13T10:05:06.759Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:10506875:100]
+[2022-04-13T10:05:06.760Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T10:10:06.675Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:10806790]
+[2022-04-13T10:10:06.794Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:10806910:115]
+[2022-04-13T10:10:06.795Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T10:15:06.697Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:11106811]
+[2022-04-13T10:15:06.800Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:11106916:104]
+[2022-04-13T10:15:06.802Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T10:20:06.726Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:11406840]
+[2022-04-13T10:20:06.839Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:11406954:112]
+[2022-04-13T10:20:06.841Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T10:25:06.747Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:11706861]
+[2022-04-13T10:25:06.841Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:11706957:95]
+[2022-04-13T10:25:06.842Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T10:30:06.765Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:12006880]
+[2022-04-13T10:30:06.862Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:12006977:96]
+[2022-04-13T10:30:06.863Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T10:35:06.788Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:12306900]
+[2022-04-13T10:35:06.906Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:12307022:119]
+[2022-04-13T10:35:06.907Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T10:40:06.806Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:12606920]
+[2022-04-13T10:40:06.903Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:12607019:97]
+[2022-04-13T10:40:06.904Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T10:45:06.827Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:12906942]
+[2022-04-13T10:45:06.927Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:12907042:99]
+[2022-04-13T10:45:06.928Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T10:50:06.847Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:13206960]
+[2022-04-13T10:50:06.946Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:13207061:100]
+[2022-04-13T10:50:06.947Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T10:55:06.866Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:13506981]
+[2022-04-13T10:55:06.974Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:13507089:107]
+[2022-04-13T10:55:06.975Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T11:00:06.885Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:13807000]
+[2022-04-13T11:00:06.999Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:13807115:114]
+[2022-04-13T11:00:07.000Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T11:05:06.907Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:14107021]
+[2022-04-13T11:05:07.002Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:14107118:96]
+[2022-04-13T11:05:07.004Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T11:10:06.926Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:14407041]
+[2022-04-13T11:10:07.028Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:14407144:103]
+[2022-04-13T11:10:07.029Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T11:15:06.946Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:14707061]
+[2022-04-13T11:15:07.060Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:14707176:113]
+[2022-04-13T11:15:07.062Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T11:20:06.966Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:15007080]
+[2022-04-13T11:20:07.086Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:15007202:121]
+[2022-04-13T11:20:07.088Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T11:25:06.987Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:15307101]
+[2022-04-13T11:25:07.105Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:15307221:119]
+[2022-04-13T11:25:07.106Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T11:30:07.007Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:15607120]
+[2022-04-13T11:30:07.127Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:15607242:120]
+[2022-04-13T11:30:07.127Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T11:35:07.027Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:15907141]
+[2022-04-13T11:35:07.136Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:15907252:110]
+[2022-04-13T11:35:07.137Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T11:40:07.045Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:16207160]
+[2022-04-13T11:40:07.165Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:16207281:120]
+[2022-04-13T11:40:07.166Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T11:45:07.066Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:16507181]
+[2022-04-13T11:45:07.182Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:16507298:115]
+[2022-04-13T11:45:07.184Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T11:50:07.086Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:16807201]
+[2022-04-13T11:50:07.189Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:16807305:102]
+[2022-04-13T11:50:07.191Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T11:55:07.106Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:17107221]
+[2022-04-13T11:55:07.212Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:17107328:105]
+[2022-04-13T11:55:07.214Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T12:00:07.136Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:17407251]
+[2022-04-13T12:00:07.246Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:17407362:111]
+[2022-04-13T12:00:07.248Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T12:05:07.156Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:17707271]
+[2022-04-13T12:05:07.254Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:17707370:96]
+[2022-04-13T12:05:07.256Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T12:10:07.176Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:18007290]
+[2022-04-13T12:10:07.291Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:18007407:116]
+[2022-04-13T12:10:07.292Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T12:15:07.199Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:18307311]
+[2022-04-13T12:15:07.296Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:18307412:100]
+[2022-04-13T12:15:07.297Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T12:20:07.216Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:18607331]
+[2022-04-13T12:20:07.335Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:18607452:119]
+[2022-04-13T12:20:07.336Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T12:25:07.237Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:18907351]
+[2022-04-13T12:25:07.351Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:18907467:115]
+[2022-04-13T12:25:07.353Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T12:30:07.256Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:19207371]
+[2022-04-13T12:30:07.365Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:19207481:110]
+[2022-04-13T12:30:07.366Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T12:35:07.276Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:19507391]
+[2022-04-13T12:35:07.383Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:19507499:107]
+[2022-04-13T12:35:07.385Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T12:40:07.295Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:19807410]
+[2022-04-13T12:40:07.397Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:19807512:101]
+[2022-04-13T12:40:07.399Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T12:45:07.317Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:20107431]
+[2022-04-13T12:45:07.431Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:20107546:114]
+[2022-04-13T12:45:07.432Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T12:50:07.336Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:20407450]
+[2022-04-13T12:50:07.450Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:20407566:115]
+[2022-04-13T12:50:07.451Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T12:55:07.357Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:20707472]
+[2022-04-13T12:55:07.465Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:20707581:106]
+[2022-04-13T12:55:07.467Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T13:00:07.377Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:21007491]
+[2022-04-13T13:00:07.499Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:21007615:122]
+[2022-04-13T13:00:07.500Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T13:05:07.397Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:21307511]
+[2022-04-13T13:05:07.520Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:21307636:124]
+[2022-04-13T13:05:07.522Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T13:10:07.417Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:21607531]
+[2022-04-13T13:10:07.525Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:21607640:108]
+[2022-04-13T13:10:07.527Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T13:15:07.437Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:21907552]
+[2022-04-13T13:15:07.567Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:21907682:127]
+[2022-04-13T13:15:07.569Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T13:20:07.457Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:22207571]
+[2022-04-13T13:20:07.566Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:22207681:109]
+[2022-04-13T13:20:07.568Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T13:25:07.476Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:22507591]
+[2022-04-13T13:25:07.598Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:22507713:120]
+[2022-04-13T13:25:07.599Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T13:30:07.496Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:22807610]
+[2022-04-13T13:30:07.613Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:22807729:118]
+[2022-04-13T13:30:07.614Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T13:35:07.517Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:23107631]
+[2022-04-13T13:35:07.632Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:23107747:115]
+[2022-04-13T13:35:07.633Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T13:40:07.536Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:23407650]
+[2022-04-13T13:40:07.653Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:23407769:118]
+[2022-04-13T13:40:07.654Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T13:45:07.557Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:23707671]
+[2022-04-13T13:45:07.660Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:23707776:104]
+[2022-04-13T13:45:07.662Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T13:50:07.575Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:24007690]
+[2022-04-13T13:50:07.696Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:24007812:121]
+[2022-04-13T13:50:07.697Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T13:55:07.597Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:24307711]
+[2022-04-13T13:55:07.715Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:24307831:119]
+[2022-04-13T13:55:07.719Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T14:00:07.616Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:24607731]
+[2022-04-13T14:00:07.715Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:24607831:99]
+[2022-04-13T14:00:07.717Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T14:05:07.636Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:24907751]
+[2022-04-13T14:05:07.744Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:24907859:108]
+[2022-04-13T14:05:07.746Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T14:10:07.656Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:25207771]
+[2022-04-13T14:10:07.775Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:25207890:118]
+[2022-04-13T14:10:07.777Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T14:15:07.677Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:25507791]
+[2022-04-13T14:15:07.796Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:25507913:120]
+[2022-04-13T14:15:07.797Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T14:20:07.696Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:25807811]
+[2022-04-13T14:20:07.803Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:25807919:107]
+[2022-04-13T14:20:07.804Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T14:25:07.727Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:26107841]
+[2022-04-13T14:25:07.836Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:26107951:109]
+[2022-04-13T14:25:07.837Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T14:30:07.747Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:26407861]
+[2022-04-13T14:30:07.854Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:26407970:108]
+[2022-04-13T14:30:07.855Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T14:35:07.766Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:26707881]
+[2022-04-13T14:35:07.876Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:26707992:110]
+[2022-04-13T14:35:07.878Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T14:40:07.787Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:27007901]
+[2022-04-13T14:40:07.907Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:27008023:121]
+[2022-04-13T14:40:07.908Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T14:45:07.807Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:27307921]
+[2022-04-13T14:45:07.919Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:27308034:111]
+[2022-04-13T14:45:07.923Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T14:50:07.827Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:27607941]
+[2022-04-13T14:50:07.939Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:27608054:111]
+[2022-04-13T14:50:07.940Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T14:55:07.846Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:27907961]
+[2022-04-13T14:55:07.951Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:27908066:105]
+[2022-04-13T14:55:07.952Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T15:00:07.866Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:28207981]
+[2022-04-13T15:00:07.968Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:28208084:103]
+[2022-04-13T15:00:07.970Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T15:05:07.887Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:28508001]
+[2022-04-13T15:05:07.990Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:28508106:104]
+[2022-04-13T15:05:07.991Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T15:10:07.905Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:28808020]
+[2022-04-13T15:10:08.022Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:28808138:117]
+[2022-04-13T15:10:08.023Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T15:15:07.926Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:29108041]
+[2022-04-13T15:15:08.030Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:29108145:103]
+[2022-04-13T15:15:08.031Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T15:20:07.945Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:29408060]
+[2022-04-13T15:20:08.051Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:29408167:106]
+[2022-04-13T15:20:08.053Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T15:25:07.967Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:29708081]
+[2022-04-13T15:25:08.071Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:29708187:105]
+[2022-04-13T15:25:08.072Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T15:30:07.986Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:30008101]
+[2022-04-13T15:30:08.105Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:30008221:120]
+[2022-04-13T15:30:08.106Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T15:35:08.007Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:30308121]
+[2022-04-13T15:35:08.156Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:30308272:150]
+[2022-04-13T15:35:08.159Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T15:40:08.026Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:30608141]
+[2022-04-13T15:40:08.132Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:30608248:106]
+[2022-04-13T15:40:08.134Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T15:45:08.047Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:30908161]
+[2022-04-13T15:45:08.172Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:30908288:126]
+[2022-04-13T15:45:08.174Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T15:50:08.066Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:31208181]
+[2022-04-13T15:50:08.176Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:31208292:111]
+[2022-04-13T15:50:08.178Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T15:55:08.086Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:31508201]
+[2022-04-13T15:55:08.199Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:31508315:112]
+[2022-04-13T15:55:08.200Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T16:00:08.106Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:31808220]
+[2022-04-13T16:00:08.201Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:31808316:95]
+[2022-04-13T16:00:08.202Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T16:05:08.125Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:32108241]
+[2022-04-13T16:05:08.217Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:32108333:91]
+[2022-04-13T16:05:08.218Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T16:10:08.145Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:32408260]
+[2022-04-13T16:10:08.228Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:32408344:83]
+[2022-04-13T16:10:08.229Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T16:15:08.167Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:32708281]
+[2022-04-13T16:15:08.231Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:32708347:62]
+[2022-04-13T16:15:08.234Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T16:20:08.184Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:33008300]
+[2022-04-13T16:20:08.276Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:33008391:91]
+[2022-04-13T16:20:08.277Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T16:25:08.205Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:33308321]
+[2022-04-13T16:25:08.262Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:33308377:56]
+[2022-04-13T16:25:08.263Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T16:30:08.235Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:33608350]
+[2022-04-13T16:30:08.337Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:33608452:101]
+[2022-04-13T16:30:08.338Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T16:35:08.256Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:33908371]
+[2022-04-13T16:35:08.346Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:33908462:90]
+[2022-04-13T16:35:08.347Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T16:40:08.273Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:34208389]
+[2022-04-13T16:40:08.344Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:34208460:70]
+[2022-04-13T16:40:08.345Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T16:45:08.295Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:34508410]
+[2022-04-13T16:45:08.412Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:34508528:117]
+[2022-04-13T16:45:08.413Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T16:50:08.314Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:34808430]
+[2022-04-13T16:50:08.371Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:34808487:56]
+[2022-04-13T16:50:08.372Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T16:55:08.334Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:35108450]
+[2022-04-13T16:55:08.392Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:35108508:57]
+[2022-04-13T16:55:08.393Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T17:00:08.354Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:35408470]
+[2022-04-13T17:00:08.409Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:35408525:55]
+[2022-04-13T17:00:08.410Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T17:05:08.376Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:35708491]
+[2022-04-13T17:05:08.480Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:35708596:104]
+[2022-04-13T17:05:08.482Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T17:10:08.396Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:36008510]
+[2022-04-13T17:10:08.492Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:36008608:97]
+[2022-04-13T17:10:08.494Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T17:15:08.417Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:36308532]
+[2022-04-13T17:15:08.522Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:36308638:103]
+[2022-04-13T17:15:08.523Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T17:20:08.434Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:36608550]
+[2022-04-13T17:20:08.488Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:36608604:54]
+[2022-04-13T17:20:08.489Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T17:25:08.454Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:36908570]
+[2022-04-13T17:25:08.511Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:36908627:57]
+[2022-04-13T17:25:08.512Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T17:30:08.474Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:37208590]
+[2022-04-13T17:30:08.534Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:37208650:60]
+[2022-04-13T17:30:08.535Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T17:35:08.497Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:37508611]
+[2022-04-13T17:35:08.615Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:37508731:116]
+[2022-04-13T17:35:08.616Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T17:40:08.516Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:37808631]
+[2022-04-13T17:40:08.626Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:37808740:108]
+[2022-04-13T17:40:08.628Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T17:45:08.534Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:38108650]
+[2022-04-13T17:45:08.593Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:38108709:59]
+[2022-04-13T17:45:08.594Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T17:50:08.554Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:38408670]
+[2022-04-13T17:50:08.611Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:38408727:57]
+[2022-04-13T17:50:08.612Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T17:55:08.577Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:38708691]
+[2022-04-13T17:55:08.700Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:38708816:124]
+[2022-04-13T17:55:08.701Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T18:00:08.594Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:39008710]
+[2022-04-13T18:00:08.657Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:39008773:63]
+[2022-04-13T18:00:08.658Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T18:05:08.614Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:39308730]
+[2022-04-13T18:05:08.672Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:39308788:58]
+[2022-04-13T18:05:08.674Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T18:10:08.645Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:39608760]
+[2022-04-13T18:10:08.749Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:39608864:103]
+[2022-04-13T18:10:08.750Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T18:15:08.666Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:39908781]
+[2022-04-13T18:15:08.779Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:39908894:113]
+[2022-04-13T18:15:08.781Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T18:20:08.684Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:40208800]
+[2022-04-13T18:20:08.738Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:40208854:53]
+[2022-04-13T18:20:08.739Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T18:25:08.704Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:40508820]
+[2022-04-13T18:25:08.763Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:40508879:59]
+[2022-04-13T18:25:08.764Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T18:30:08.714Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:40808829]
+[2022-04-13T18:30:08.772Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:40808888:58]
+[2022-04-13T18:30:08.774Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T18:35:08.736Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:41108851]
+[2022-04-13T18:35:08.840Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:41108956:104]
+[2022-04-13T18:35:08.841Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T18:40:08.760Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:41408870]
+[2022-04-13T18:40:08.858Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:41408974:103]
+[2022-04-13T18:40:08.859Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T18:45:08.777Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:41708891]
+[2022-04-13T18:45:08.899Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:41709015:120]
+[2022-04-13T18:45:08.900Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T18:50:08.794Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:42008910]
+[2022-04-13T18:50:08.851Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:42008967:57]
+[2022-04-13T18:50:08.853Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T18:55:08.816Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:42308931]
+[2022-04-13T18:55:08.937Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:42309053:122]
+[2022-04-13T18:55:08.939Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T19:00:08.834Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:42608950]
+[2022-04-13T19:00:08.890Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:42609006:56]
+[2022-04-13T19:00:08.891Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T19:05:08.856Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:42908971]
+[2022-04-13T19:05:08.967Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:42909083:111]
+[2022-04-13T19:05:08.968Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T19:10:08.876Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:43208991]
+[2022-04-13T19:10:08.971Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:43209087:96]
+[2022-04-13T19:10:08.972Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T19:15:08.897Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:43509011]
+[2022-04-13T19:15:09.016Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:43509132:120]
+[2022-04-13T19:15:09.017Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T19:20:08.916Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:43809031]
+[2022-04-13T19:20:09.032Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:43809148:116]
+[2022-04-13T19:20:09.034Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T19:25:08.946Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:44109061]
+[2022-04-13T19:25:09.053Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:44109169:107]
+[2022-04-13T19:25:09.055Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T19:30:08.966Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:44409080]
+[2022-04-13T19:30:09.072Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:44409188:107]
+[2022-04-13T19:30:09.074Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T19:35:08.984Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:44709100]
+[2022-04-13T19:35:09.044Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:44709160:58]
+[2022-04-13T19:35:09.045Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T19:40:09.006Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:45009121]
+[2022-04-13T19:40:09.123Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:45009240:119]
+[2022-04-13T19:40:09.125Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T19:45:09.026Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:45309141]
+[2022-04-13T19:45:09.139Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:45309255:113]
+[2022-04-13T19:45:09.140Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T19:50:09.044Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:45609160]
+[2022-04-13T19:50:09.098Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:45609214:54]
+[2022-04-13T19:50:09.099Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T19:55:09.067Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:45909181]
+[2022-04-13T19:55:09.168Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:45909284:102]
+[2022-04-13T19:55:09.170Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T20:00:09.086Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:46209200]
+[2022-04-13T20:00:09.193Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:46209308:107]
+[2022-04-13T20:00:09.194Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T20:05:09.106Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:46509221]
+[2022-04-13T20:05:09.224Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:46509340:117]
+[2022-04-13T20:05:09.225Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T20:10:09.126Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:46809240]
+[2022-04-13T20:10:09.182Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:46809298:57]
+[2022-04-13T20:10:09.183Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T20:15:09.146Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:47109261]
+[2022-04-13T20:15:09.252Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:47109368:106]
+[2022-04-13T20:15:09.254Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T20:20:09.164Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:47409280]
+[2022-04-13T20:20:09.221Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:47409337:57]
+[2022-04-13T20:20:09.222Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T20:25:09.186Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:47709301]
+[2022-04-13T20:25:09.300Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:47709415:114]
+[2022-04-13T20:25:09.303Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T20:30:09.214Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:48009330]
+[2022-04-13T20:30:09.274Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:48009390:60]
+[2022-04-13T20:30:09.275Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T20:35:09.235Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:48309351]
+[2022-04-13T20:35:09.298Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:48309414:63]
+[2022-04-13T20:35:09.299Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T20:40:09.256Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:48609371]
+[2022-04-13T20:40:09.363Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:48609478:107]
+[2022-04-13T20:40:09.364Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T20:45:09.274Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:48909390]
+[2022-04-13T20:45:09.337Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:48909453:62]
+[2022-04-13T20:45:09.338Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T20:50:09.296Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:49209411]
+[2022-04-13T20:50:09.404Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:49209519:108]
+[2022-04-13T20:50:09.406Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T20:55:09.324Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:49509440]
+[2022-04-13T20:55:09.384Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:49509500:60]
+[2022-04-13T20:55:09.385Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T21:00:09.347Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:49809460]
+[2022-04-13T21:00:09.458Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:49809574:113]
+[2022-04-13T21:00:09.460Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T21:05:09.367Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:50109482]
+[2022-04-13T21:05:09.477Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:50109592:109]
+[2022-04-13T21:05:09.478Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T21:10:09.386Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:50409501]
+[2022-04-13T21:10:09.507Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:50409623:120]
+[2022-04-13T21:10:09.510Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T21:15:09.407Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:50709521]
+[2022-04-13T21:15:09.527Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:50709643:121]
+[2022-04-13T21:15:09.528Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T21:20:09.426Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:51009541]
+[2022-04-13T21:20:09.543Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:51009659:118]
+[2022-04-13T21:20:09.544Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T21:25:09.454Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:51309570]
+[2022-04-13T21:25:09.511Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:51309627:56]
+[2022-04-13T21:25:09.512Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T21:30:09.476Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:51609590]
+[2022-04-13T21:30:09.580Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:51609696:105]
+[2022-04-13T21:30:09.582Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T21:35:09.504Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:51909620]
+[2022-04-13T21:35:09.566Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:51909682:60]
+[2022-04-13T21:35:09.567Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T21:40:09.524Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:52209640]
+[2022-04-13T21:40:09.581Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:52209697:57]
+[2022-04-13T21:40:09.582Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T21:45:09.546Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:52509661]
+[2022-04-13T21:45:09.650Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:52509765:103]
+[2022-04-13T21:45:09.652Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T21:50:09.565Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:52809680]
+[2022-04-13T21:50:09.665Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:52809781:99]
+[2022-04-13T21:50:09.667Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T21:55:09.585Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:53109701]
+[2022-04-13T21:55:09.640Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:53109756:55]
+[2022-04-13T21:55:09.642Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T22:00:09.604Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:53409720]
+[2022-04-13T22:00:09.660Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:53409776:56]
+[2022-04-13T22:00:09.661Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T22:05:09.624Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:53709740]
+[2022-04-13T22:05:09.681Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:53709797:55]
+[2022-04-13T22:05:09.682Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T22:10:09.644Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:54009760]
+[2022-04-13T22:10:09.699Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:54009815:55]
+[2022-04-13T22:10:09.700Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T22:15:09.667Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:54309781]
+[2022-04-13T22:15:09.762Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:54309878:96]
+[2022-04-13T22:15:09.763Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T22:20:09.684Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:54609800]
+[2022-04-13T22:20:09.747Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:54609863:63]
+[2022-04-13T22:20:09.748Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T22:25:09.707Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:54909821]
+[2022-04-13T22:25:09.831Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:54909947:125]
+[2022-04-13T22:25:09.832Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T22:30:09.727Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:55209841]
+[2022-04-13T22:30:09.832Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:55209948:106]
+[2022-04-13T22:30:09.833Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T22:35:09.744Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:55509860]
+[2022-04-13T22:35:09.806Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:55509922:60]
+[2022-04-13T22:35:09.807Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T22:40:09.766Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:55809881]
+[2022-04-13T22:40:09.873Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:55809989:107]
+[2022-04-13T22:40:09.874Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T22:45:09.784Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:56109901]
+[2022-04-13T22:45:09.848Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:56109964:63]
+[2022-04-13T22:45:09.849Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T22:50:09.804Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:56409920]
+[2022-04-13T22:50:09.866Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:56409982:61]
+[2022-04-13T22:50:09.867Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T22:55:09.825Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:56709940]
+[2022-04-13T22:55:09.888Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:56710004:63]
+[2022-04-13T22:55:09.889Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T23:00:09.846Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:57009961]
+[2022-04-13T23:00:09.958Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:57010073:112]
+[2022-04-13T23:00:09.959Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T23:05:09.867Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:57309981]
+[2022-04-13T23:05:09.987Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:57310102:120]
+[2022-04-13T23:05:09.989Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T23:10:09.884Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:57610000]
+[2022-04-13T23:10:09.943Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:57610059:59]
+[2022-04-13T23:10:09.944Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T23:15:09.907Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:57910021]
+[2022-04-13T23:15:10.023Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:57910139:117]
+[2022-04-13T23:15:10.024Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T23:20:09.934Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:58210050]
+[2022-04-13T23:20:09.994Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:58210110:60]
+[2022-04-13T23:20:09.995Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T23:25:09.955Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:58510071]
+[2022-04-13T23:25:10.012Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:58510128:57]
+[2022-04-13T23:25:10.013Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T23:30:09.976Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:58810090]
+[2022-04-13T23:30:10.092Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:58810208:117]
+[2022-04-13T23:30:10.095Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T23:35:09.997Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:59110112]
+[2022-04-13T23:35:10.118Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:59110234:122]
+[2022-04-13T23:35:10.119Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T23:40:10.014Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:59410130]
+[2022-04-13T23:40:10.067Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:59410183:53]
+[2022-04-13T23:40:10.068Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T23:45:10.034Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:59710150]
+[2022-04-13T23:45:10.099Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:59710214:63]
+[2022-04-13T23:45:10.100Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T23:50:10.054Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:60010170]
+[2022-04-13T23:50:10.113Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:60010229:59]
+[2022-04-13T23:50:10.114Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-13T23:55:10.077Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:60310191]
+[2022-04-13T23:55:10.179Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:60310295:100]
+[2022-04-13T23:55:10.181Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-14T00:00:10.099Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:60610211]
+[2022-04-14T00:00:10.211Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:60610327:116]
+[2022-04-14T00:00:10.212Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-14T00:05:10.117Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:60910231]
+[2022-04-14T00:05:10.221Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:60910337:102]
+[2022-04-14T00:05:10.222Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-14T00:10:10.136Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:61210251]
+[2022-04-14T00:10:10.242Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:61210358:107]
+[2022-04-14T00:10:10.243Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-14T00:15:10.156Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:61510271]
+[2022-04-14T00:15:10.268Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:61510384:112]
+[2022-04-14T00:15:10.269Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-14T00:20:10.176Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:61810291]
+[2022-04-14T00:20:10.280Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:61810396:104]
+[2022-04-14T00:20:10.282Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-14T00:25:10.197Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:62110312]
+[2022-04-14T00:25:10.316Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:62110432:120]
+[2022-04-14T00:25:10.317Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-14T00:30:10.216Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:62410330]
+[2022-04-14T00:30:10.321Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:62410437:106]
+[2022-04-14T00:30:10.322Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-14T00:35:10.235Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:62710351]
+[2022-04-14T00:35:10.350Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:62710465:112]
+[2022-04-14T00:35:10.352Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-14T00:37:16.043Z] [INFO] [#tid_sid_invoker] [DockerClientWithFileAccess] running /usr/bin/docker ps --quiet --no-trunc --all --filter name=wsk0_ (timeout: 1 minute) [marker:invoker_docker.ps_start:62836158]
+[2022-04-14T00:37:16.067Z] [INFO] [#tid_sid_unknown] [Controller] Shutting down Kamon with coordinated shutdown
+[2022-04-14T00:37:16.134Z] [INFO] [#tid_sid_invoker] [DockerClientWithFileAccess]  [marker:invoker_docker.ps_finish:62836250:90]
+[ERROR] [04/14/2022 00:37:16.234] [pool-4-thread-801] [Controller$(akka://controller-actor-system)] [#tid_sid_invoker] [RuncClient] info: command was unsuccessful, code: 1 (unsuccessful), stdout: , stderr: container "a60743d019163a19700b741e5ca621ae3cd132d8088f4301dfe40e3aa3a2fab8" does not exist [marker:invoker_runc.resume_error:62836346:52]
+[ERROR] [04/14/2022 00:37:16.234] [pool-4-thread-800] [Controller$(akka://controller-actor-system)] [#tid_sid_invoker] [RuncClient] info: command was unsuccessful, code: 1 (unsuccessful), stdout: , stderr: container "a62fa1713c88083177dfa0eb0f55f4228e6c34f072e92eb0e63aa6aa396f76af" does not exist [marker:invoker_runc.resume_error:62836349:56]
+[ERROR] [04/14/2022 00:37:16.276] [pool-4-thread-799] [Controller$(akka://controller-actor-system)] [#tid_sid_invoker] [DockerClientWithFileAccess] cannot enqueue after timer shutdown [marker:invoker_docker.rm_error:62836392:15]
+[2022-04-14T01:21:34.402Z] [INFO] Loaded metric reporter [kamon.statsd.StatsDReporter]
+[2022-04-14T01:21:34.399Z] [INFO] Started the Kamon StatsD reporter
+[2022-04-14T01:21:35.276Z] [INFO] Slf4jLogger started
+[2022-04-14T01:21:36.573Z] [INFO] [#tid_sid_unknown] [Config] environment set value for limits.triggers.fires.perMinute
+[2022-04-14T01:21:36.575Z] [INFO] [#tid_sid_unknown] [Config] environment set value for runtimes.registry
+[2022-04-14T01:21:36.576Z] [INFO] [#tid_sid_unknown] [Config] environment set value for limits.actions.sequence.maxLength
+[2022-04-14T01:21:36.578Z] [INFO] [#tid_sid_unknown] [Config] environment set value for limits.actions.invokes.concurrent
+[2022-04-14T01:21:36.580Z] [INFO] [#tid_sid_unknown] [Config] environment set value for controller.instances
+[2022-04-14T01:21:36.581Z] [INFO] [#tid_sid_unknown] [Config] environment set value for whisk.api.host.name
+[2022-04-14T01:21:36.585Z] [INFO] [#tid_sid_unknown] [Config] environment set value for limits.actions.invokes.perMinute
+[2022-04-14T01:21:36.587Z] [INFO] [#tid_sid_unknown] [Config] environment set value for whisk.api.host.proto
+[2022-04-14T01:21:36.589Z] [INFO] [#tid_sid_unknown] [Config] environment set value for whisk.api.host.port
+[2022-04-14T01:21:36.590Z] [INFO] [#tid_sid_unknown] [Config] environment set value for runtimes.manifest
+[2022-04-14T01:21:36.592Z] [INFO] [#tid_sid_unknown] [Config] environment set value for port
+[2022-04-14T01:21:36.942Z] [INFO] [#tid_sid_unknown] [LeanMessagingProvider] topic completed0 created
+[2022-04-14T01:21:36.943Z] [INFO] [#tid_sid_unknown] [LeanMessagingProvider] topic health created
+[2022-04-14T01:21:36.944Z] [INFO] [#tid_sid_unknown] [LeanMessagingProvider] topic cacheInvalidation created
+[2022-04-14T01:21:36.946Z] [INFO] [#tid_sid_unknown] [LeanMessagingProvider] topic events created
+[2022-04-14T01:21:37.378Z] [INFO] [#tid_sid_controller] [Controller] starting controller instance 0 [marker:controller_startup0_count:814]
+[2022-04-14T01:21:39.425Z] [INFO] [#tid_sid_dispatcher] [MessageFeed] handler capacity = 128, pipeline fill at = 128, pipeline depth = 256
+[2022-04-14T01:21:39.652Z] [INFO] [#tid_sid_dispatcher] [MessageFeed] handler capacity = 128, pipeline fill at = 128, pipeline depth = 256
+[2022-04-14T01:21:39.833Z] [INFO] Slf4jLogger started
+[2022-04-14T01:21:40.162Z] [INFO] [#tid_sid_unknown] [InvokerReactive] LogStoreProvider: class org.apache.openwhisk.core.containerpool.logging.DockerToActivationLogStore
+[2022-04-14T01:21:40.295Z] [INFO] [#tid_sid_unknown] [InvokerReactive] AAAAAAAAAA: poolConfig.userMemory: 1073741824 B, MemoryLimit.minMemory: 134217728 B
+[2022-04-14T01:21:40.882Z] [INFO] [#tid_sid_unknown] [DockerClientWithFileAccess] Detected docker client version 17.12.1-ce
+[2022-04-14T01:21:41.031Z] [INFO] [#tid_sid_invoker] [DockerClientWithFileAccess] running /usr/bin/docker ps --quiet --no-trunc --all --filter name=wsk0_ (timeout: 1 minute) [marker:invoker_docker.ps_start:4469]
+[2022-04-14T01:21:41.214Z] [INFO] [#tid_sid_invoker] [DockerClientWithFileAccess]  [marker:invoker_docker.ps_finish:4651:34]
+[2022-04-14T01:21:41.270Z] [INFO] [#tid_sid_invoker] [DockerContainerFactory] removing 0 action containers.
+[2022-04-14T01:21:42.558Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore] [QUERY] 'whisk_local_subjects' searching 'namespaceThrottlings/blockedNamespaces [marker:database_queryView_start:5996]
+[2022-04-14T01:21:42.705Z] [INFO] [#tid_sid_dispatcher] [MessageFeed] handler capacity = 2000, pipeline fill at = 2000, pipeline depth = 4000
+[2022-04-14T01:21:42.734Z] [INFO] [#tid_sid_invokerWarmup] [ContainerPool] pre-warming 2 nodejs:6 256 MB
+[2022-04-14T01:21:42.738Z] [INFO] [#tid_sid_controller] [Controller] loadbalancer initialized: LeanBalancer
+[2022-04-14T01:21:42.989Z] [INFO] [#tid_sid_controller] [KindRestrictor] all kinds are allowed, the white-list is not specified
+[2022-04-14T01:21:43.367Z] [INFO] [#tid_sid_invokerWarmup] [DockerClientWithFileAccess] running /usr/bin/docker run -d --cpu-shares 256 --memory 256m --memory-swap 256m --network bridge -e __OW_API_HOST=https://172.17.0.1:443 --name wsk0_1_prewarm_nodejs6 --pids-limit 1024 --cap-drop NET_RAW --cap-drop NET_ADMIN --ulimit nofile=1024:1024 --log-driver json-file --env __OW_ALLOW_CONCURRENT=True kpavel/nodejs6action:rpi (timeout: 1 minute) [marker:invoker_docker.run_start:6802]
+[2022-04-14T01:21:43.369Z] [INFO] [#tid_sid_invokerWarmup] [DockerClientWithFileAccess] running /usr/bin/docker run -d --cpu-shares 256 --memory 256m --memory-swap 256m --network bridge -e __OW_API_HOST=https://172.17.0.1:443 --name wsk0_2_prewarm_nodejs6 --pids-limit 1024 --cap-drop NET_RAW --cap-drop NET_ADMIN --ulimit nofile=1024:1024 --log-driver json-file --env __OW_ALLOW_CONCURRENT=True kpavel/nodejs6action:rpi (timeout: 1 minute) [marker:invoker_docker.run_start:6802]
+[2022-04-14T01:21:43.652Z] [INFO] [#tid_sid_invoker] [CouchDbRestStore]  [marker:database_queryView_finish:7089:1092]
+[2022-04-14T01:21:43.738Z] [INFO] [#tid_sid_unknown] [InvokerReactive] updated blacklist to 0 entries
+[2022-04-14T01:21:45.235Z] [INFO] [#tid_sid_controller] [ActionsApi] actionSequenceLimit '50'
+[2022-04-14T01:21:45.370Z] [INFO] [#tid_sid_invokerWarmup] [DockerClientWithFileAccess]  [marker:invoker_docker.run_finish:8807:2005]
+[2022-04-14T01:21:45.398Z] [INFO] [#tid_sid_invokerWarmup] [DockerClientWithFileAccess]  [marker:invoker_docker.run_finish:8835:2030]

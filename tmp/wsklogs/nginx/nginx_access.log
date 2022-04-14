@@ -1,0 +1,4 @@
+172.17.0.1 - - [13/Apr/2022:07:11:05 +0000] [#tid_20e6e950748935b02857afc29c95b654] GET /cli/go/download/linux/aarch64/wsk HTTP/1.1 301 178 - ansible-httpget -
+172.17.0.1 - - [13/Apr/2022:07:11:05 +0000] [#tid_1dd1c2c683f8fdacfa15683af5dce657] GET /cli/linux/aarch64/wsk HTTP/1.1 404 162 - ansible-httpget -
+172.17.0.1 - - [14/Apr/2022:01:22:41 +0000] [#tid_22504545051d54d7a51fb491b01b99ac] GET /cli/go/download/linux/aarch64/wsk HTTP/1.1 301 178 - ansible-httpget -
+172.17.0.1 - - [14/Apr/2022:01:22:41 +0000] [#tid_9c20d627bde9bda6f46cdffb4d35329a] GET /cli/linux/aarch64/wsk HTTP/1.1 200 12649148 - ansible-httpget -
