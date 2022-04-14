@@ -11,7 +11,6 @@
                 "deprecated": true
             },
             {
-
                 "kind": "nodejs:6",
                 "default": true,
                 "image": {
@@ -20,13 +19,30 @@
                     "tag": "rpi"
                 },
                 "deprecated": false,
-                "stemCells": [{
-                    "count": 2,
-                    "memory": "256 MB"
-                }]
+                "stemCells": [
+                    {
+                        "count": 2,
+                        "memory": "256 MB"
+                    }
+                ]
+            }
+        ],
+        "go": [
+            {
+                "kind": "go:1.17",
+                "default": true,
+                "deprecated": false,
+                "attached": {
+                    "attachmentName": "codefile",
+                    "attachmentType": "text/plain"
+                },
+                "image": {
+                    "prefix": "openwhisk",
+                    "name": "action-golang-v1.17",
+                    "tag": "c608614"
+                }
             }
         ]
     },
-    "blackboxes": [
-    ]
+    "blackboxes": []
 }

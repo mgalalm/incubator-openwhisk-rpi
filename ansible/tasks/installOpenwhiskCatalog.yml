@@ -7,7 +7,7 @@
     catalog_location={{ item.value.location }}
     catalog_repo_url={{ item.value.url }}
     api_host={{ whisk_api_host_name | default(groups['edge'] | first) }}
-    version="HEAD"
+    version="0.9.0"
     repo_update="yes"
 
 - set_fact:
