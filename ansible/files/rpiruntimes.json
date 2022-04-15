@@ -37,9 +37,9 @@
                     "attachmentType": "text/plain"
                 },
                 "image": {
-                    "prefix": "openwhisk",
+                    "prefix": "mgalalm",
                     "name": "action-golang-v1.17",
-                    "tag": "c608614"
+                    "tag": "rpi"
                 }
             }
         ]

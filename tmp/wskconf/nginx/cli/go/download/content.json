@@ -20,7 +20,7 @@
                 "path": "linux/arm/OpenWhisk_CLI-linux-arm.tgz"
             },
             "aarch64": {
-                "path": "linux/arm64/OpenWhisk_CLI-linux-arm64.tgz"
+                "path": "linux/aarch64/OpenWhisk_CLI-linux-arm64.tgz"
             },
             "arm64": {
                 "path": "linux/arm64/OpenWhisk_CLI-linux-arm64.tgz"
